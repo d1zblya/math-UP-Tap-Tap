@@ -1,0 +1,110 @@
+:root {
+    --main-bg-color: #fff;
+    --main-text-color: #000;
+    --tg-theme-button-hover-color: color-mix(in srgb, var(--tg-theme-button-color), black 10%);
+    --tg-theme-button-text-hover-color: color-mix(in srgb, var(--tg-theme-button-text-color), black 10%);
+    --tg-theme-border-color: color-mix(in srgb, var(--tg-theme-bg-color), black 10%);
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--tg-theme-bg-color);
+    color: var(--tg-theme-text-color);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.top-panel {
+    background: var(--tg-theme-header-bg-color);
+    color: var(--tg-theme-text-color);
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid var(--tg-theme-border-color);
+}
+
+.UserPanel {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.navigation {
+    background: var(--tg-theme-section-bg-color);
+    color: var(--tg-theme-text-color);
+    text-align: center;
+    padding: 10px;
+    height: 70px;
+    border-top: 1px solid var(--tg-theme-border-color);
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 3px 10px;
+}
+
+
+.navigation-link {
+    width: 20%;
+    height: 100%;
+    margin: 0 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    background: var(--tg-theme-button-color);
+    color: var(--tg-theme-button-text-color);
+}
+
+.navigation-link:hover {
+    background: var(--tg-theme-button-hover-color);
+    color: var(--tg-theme-button-text-hover-color);
+}
+
+.score {
+    margin-left: auto;
+}
+
+.Task {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 24px;
+    padding: 20px;
+    background: var(--tg-theme-bg-color);
+    color: var(--tg-theme-text-color);
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.answer {
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 3px;
+    font-size: 20px;
+    background: var(--tg-theme-bg-color);
+    color: var(--tg-theme-text-color);
+}
