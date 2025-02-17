@@ -18,3 +18,16 @@ docker-compose.yml.
 ---
 4) ```docker-compose ps``` - выводит список контейнеров для сервисов, определенных в файле
 docker-compose.yml.
+
+
+
+### тесты:
+из корня 
+```bash 
+pytest backend/tests
+```
+
+из backend 
+``` bash
+pytest tests
+```
