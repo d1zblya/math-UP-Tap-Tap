@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String
 
-from ..database.session import Base
+from src.database.session import Base
 
 
 class TheoryModel(Base):

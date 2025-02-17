@@ -9,15 +9,17 @@ load_dotenv()
 
 
 class DBSettings(BaseSettings):
-    DB_HOST: str
-    DB_PORT: int
-    DB_USER: str
-    DB_PASS: str
-    DB_NAME: str
+    POSTGRES_SERVER: str
+    POSTGRES_PORT: int = 5432
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str = ""
+    POSTGRES_DB: str = ""
 
     @property
     def DATABASE_URL(self):
-        return f"postgresql+asyncpg://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+        return (f"postgresql+asyncpg://"
+                f"{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@"
+                f"{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}")
 
 
 class LoggingSettings(BaseSettings):
@@ -48,11 +50,6 @@ class Settings(BaseSettings):
     logging: LoggingSettings = LoggingSettings()
 
     model_config = SettingsConfigDict(env_file=".env", extra="allow")
-
-    # class Config:
-    #     case_sensitive = True
-    #     env_file = ".env"
-    #     env_file_encoding = "utf-8"
 
 
 settings = Settings()

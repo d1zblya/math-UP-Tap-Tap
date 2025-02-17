@@ -2,10 +2,10 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, Response, status
 
+from src.users.dependencies import get_current_user
 from src.users.models import UserModel
 from src.users.schemas import UserCreate, User, UserUpdate, UserHistory, UserHistoryCreate
-from .dependencies import get_current_user
-from .service import UserService
+from src.users.service import UserService
 
 auth_router = APIRouter(prefix="/auth", tags=["auth"])
 user_router = APIRouter(prefix="/users", tags=["user"])

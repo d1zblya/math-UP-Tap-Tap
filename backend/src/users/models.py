@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, func, BigInteger, ForeignKey
 
-from ..database.session import Base
+from src.database.session import Base
 
 
 class UserModel(Base):

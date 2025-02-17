@@ -1,7 +1,7 @@
 import hashlib
 import hmac
 from urllib.parse import unquote
-from config import settings
+from src.config import settings
 
 
 def validate_mini_app_data(data: str):  # noqa
