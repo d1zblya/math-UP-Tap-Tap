@@ -8,6 +8,7 @@ import Quests from "./components/Quests.jsx";
 import Theory from "./components/Theory.jsx";
 import Statistics from "./components/Statistics.jsx";
 import Equations from "./components/Equations.jsx";
+import BalancePanel from "./components/BalancePanel.jsx";
 
 function App() {
     const [username, setUsername] = useState('Guest');
@@ -27,6 +28,8 @@ function App() {
         <div className="container">
             <header className="top-panel">
                 <UserPanel username={username} avatarUrl={avatarUrl}/>
+                <div className="decor-border"></div>
+                <BalancePanel/>
             </header>
             <main className="content">
                 <Routes>

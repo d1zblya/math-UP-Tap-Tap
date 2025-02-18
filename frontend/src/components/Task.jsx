@@ -7,7 +7,9 @@ function Task() {
 
     const [answer, setAnswer] = useState(null);
     const [result, setResult] = useState(null);
+
     var answerStyle = {}
+
 
     switch (result) {
         case true:
@@ -63,6 +65,7 @@ function Task() {
 
             if (parseFloat(answer) === correctAnswer) {
                 setResult(true);
+                window.Telegram.WebApp.HapticFeedback.impactOccurred('light')
                 setTimeout(() => {
                     generateExample()
                     setAnswer('');
