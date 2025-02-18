@@ -7,5 +7,5 @@ class UserDAO(BaseDAO[User, UserCreateDB, UserUpdateDB]):
     model = UserModel
 
 
-class UserHistoryDAO(BaseDAO[User, UserHistoryDB, UserUpdateDB]):
+class UserHistoryDAO(BaseDAO[User, UserHistoryDB, None]):
     model = UserHistoryModel

@@ -14,7 +14,7 @@ user_router = APIRouter(prefix="/users", tags=["user"])
 @auth_router.post("/register", status_code=status.HTTP_201_CREATED)
 async def register(
         user: UserCreate
-):
+) -> None:
     await UserService.register_new_user(user)
 
 
@@ -42,12 +42,10 @@ async def delete_current_user(
 
 
 @user_router.get("/{tg_id}/history")
-async def get_user_history(tg_id: int) -> Optional[list[UserHistory]]:
+async def get_user_history(tg_id: int) -> list[UserHistory]:
     return await UserService.get_user_history(tg_id)
 
 
 @user_router.post("/{tg_id}/history")
-async def create_record_in_user_history(tg_id: int, user_history: UserHistoryCreate):
-    await UserService.create_record_in_user_history(
-        tg_id=tg_id, user_history=user_history
-    )
+async def create_record_in_user_history(user_history: UserHistoryCreate):
+    await UserService.create_record_in_user_history(user_history)

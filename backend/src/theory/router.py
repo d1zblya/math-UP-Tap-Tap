@@ -14,5 +14,5 @@ async def get_one_theory(title) -> Optional[Theory]:
 
 
 @theory_router.get("")
-async def get_all_theories() -> Optional[list[Theory]]:
+async def get_all_theories() -> list[Theory]:
     return await TheoryService.get_all_theories()

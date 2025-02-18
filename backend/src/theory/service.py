@@ -26,7 +26,7 @@ class TheoryService:
     @classmethod
     async def get_all_theories(cls, *filter, **filter_by) -> Optional[list[Theory]]:
         async with async_session_maker() as session:
-            theories = await TheoryDAO.find_all(session, *filter, **filter_by, offset=0, limit=100)
+            theories = await TheoryDAO.find_all(session, *filter, **filter_by)
         if theories is None:
             msg = "Not a single theory has been found"
             logger.error(msg)

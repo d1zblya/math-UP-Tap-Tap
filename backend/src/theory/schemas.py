@@ -9,16 +9,6 @@ class TheoryBase(BaseModel):
     content: Optional[str] = Field(None)
 
 
-# class TheoryCreate(TheoryBase):
-#     tg_id: int
-
-
-class TheoryUpdate(TheoryBase):
-    tg_id: int
-    username: Optional[str]
-    bio: Optional[str]
-
-
 class Theory(TheoryBase):
     title: str
     description: str
@@ -26,14 +16,4 @@ class Theory(TheoryBase):
 
     class Config:
         from_attributes = True
-
-
-class TheoryCreateDB(TheoryBase):
-    tg_id: int
-
-
-class TheoryUpdateDB(TheoryBase):
-    tg_id: int
-    username: Optional[str]
-    bio: Optional[str]
 
