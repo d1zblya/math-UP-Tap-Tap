@@ -1,0 +1,65 @@
+@font-face {
+    font-family: 'Benzin';
+    src: url('Benzin-ExtraBold.eot');
+    src: local('☞Benzin ExtraBold'), local('Benzin-ExtraBold'),
+        url('Benzin-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('Benzin-ExtraBold.woff2') format('woff2'),
+        url('Benzin-ExtraBold.woff') format('woff'),
+        url('Benzin-ExtraBold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Benzin';
+    src: url('Benzin-Medium.eot');
+    src: local('☞Benzin Medium'), local('Benzin-Medium'),
+        url('Benzin-Medium.eot?#iefix') format('embedded-opentype'),
+        url('Benzin-Medium.woff2') format('woff2'),
+        url('Benzin-Medium.woff') format('woff'),
+        url('Benzin-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Benzin';
+    src: url('Benzin-Bold.eot');
+    src: local('☞Benzin Bold'), local('Benzin-Bold'),
+        url('Benzin-Bold.eot?#iefix') format('embedded-opentype'),
+        url('Benzin-Bold.woff2') format('woff2'),
+        url('Benzin-Bold.woff') format('woff'),
+        url('Benzin-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Benzin';
+    src: url('Benzin-Semibold.eot');
+    src: local('☞Benzin Semibold'), local('Benzin-Semibold'),
+        url('Benzin-Semibold.eot?#iefix') format('embedded-opentype'),
+        url('Benzin-Semibold.woff2') format('woff2'),
+        url('Benzin-Semibold.woff') format('woff'),
+        url('Benzin-Semibold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Benzin';
+    src: url('Benzin-Regular.eot');
+    src: local('☞Benzin Regular'), local('Benzin-Regular'),
+        url('Benzin-Regular.eot?#iefix') format('embedded-opentype'),
+        url('Benzin-Regular.woff2') format('woff2'),
+        url('Benzin-Regular.woff') format('woff'),
+        url('Benzin-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
