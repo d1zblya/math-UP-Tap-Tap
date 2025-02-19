@@ -1,9 +1,7 @@
 import hashlib
 import hmac
-from urllib.parse import unquote
-from src.config import settings
 from fastapi import HTTPException, status
-from src.config import settings
+from src.core.config import settings
 
 
 # def validate_mini_app_data(data: str):  # noqa

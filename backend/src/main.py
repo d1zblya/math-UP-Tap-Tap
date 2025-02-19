@@ -1,18 +1,26 @@
 import uvicorn
-import json
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-from starlette.responses import JSONResponse, RedirectResponse
-from src.config import settings
+from starlette.responses import RedirectResponse
+
+from src.core.cache import init_cache
+from src.core.config import settings
 
 from loguru import logger
 
 from src.tasks.router import task_router
 from src.theory.router import theory_router
 from src.users.router import auth_router, user_router
+
 # from src.utils import validate_mini_app_data
 
 app = FastAPI(title="mathUP-Mini-App", version="0.0.1")
+
+
+@app.on_event("startup")
+async def startup():
+    await init_cache()
+
 
 #
 # @app.middleware("http")
@@ -63,11 +71,11 @@ app.add_middleware(
 )
 
 
-@app.get("/")
-async def root():
-    return RedirectResponse(url="/docs")
+# @app.get("/")
+# async def root():
+#     return RedirectResponse(url="/docs")
 
 
-if __name__ == "__main__":
-    logger.add("file_main.log", retention="7 days")
-    uvicorn.run("main:app")
+# if __name__ == "__main__":
+#     logger.add("file_main.log", retention="7 days")
+#     uvicorn.run("main:app")
