@@ -9,6 +9,7 @@ import Theory from "./components/Theory.jsx";
 import Statistics from "./components/Statistics.jsx";
 import Equations from "./components/Equations.jsx";
 import BalancePanel from "./components/BalancePanel.jsx";
+import {request} from "./api/requests.js";
 
 function App() {
     const [username, setUsername] = useState('Guest');
@@ -22,14 +23,28 @@ function App() {
             setAvatarUrl(user.photo_url);
         }
     }, []);
+    const [user, setUser] = useState({
+        "tg_id": 0,
+        "points": 1000,
+        "bio": "string",
+        "registration_date": "2025-02-18T19:29:38.416Z",
+        "avatar_url": "string"
+    });
+    useEffect(() => {
+        async function fetchData() {
+            const response = await request("users/me");
+            setUser(response);
+        }
 
+        fetchData();
+    }, [])
 
     return (
         <div className="container">
             <header className="top-panel">
                 <UserPanel username={username} avatarUrl={avatarUrl}/>
                 <div className="decor-border"></div>
-                <BalancePanel/>
+                <BalancePanel balance={user.points}/>
             </header>
             <main className="content">
                 <Routes>

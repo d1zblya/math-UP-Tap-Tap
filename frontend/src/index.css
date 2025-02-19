@@ -11,6 +11,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Benzin", sans-serif;
+    font-weight: 200;
 }
 
 body {
@@ -118,11 +120,23 @@ body {
 .BalancePanel {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
     height: 80px;
     margin-top: 20px;
     border-top: solid 1px var(--main-border-color);
     border-bottom: solid 1px var(--main-border-color);
+}
+.balance {
+    font-weight: bold;
+    font-size: 25px;
+}
+.balance-title {
+    font-weight: 300;
+    font-size: 13px;
+    color: #B3B3B3;
+    top: 96px;
+    position: absolute;
 }
 .decor-border {
     height: 100px;
@@ -132,4 +146,37 @@ body {
     position: absolute;
     left: 6vw;
     top: 90px;
+}
+.username {
+    font-family: 'SF Pro Display', sans-serif;
+}
+
+
+
+
+@font-face {
+    font-family: 'Benzin';
+    src: url('./fonts/benzin/Benzin-Bold.woff2') format('woff2'),
+    url('./fonts/benzin/Benzin-Bold.ttf') format('ttf');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Benzin';
+    src: url('./fonts/benzin/Benzin-Medium.woff2') format('woff2'),
+    url('./fonts/benzin/Benzin-Medium.ttf') format('ttf');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Benzin';
+    src: url('./fonts/benzin/Benzin-Regular.woff2') format('woff2'),
+    url('./fonts/benzin/Benzin-Regular.ttf') format('ttf');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF Pro Display', sans-serif;
+    src: url('./fonts/SF/SF-Pro-Display-Regular.otf') format('otf')
 }

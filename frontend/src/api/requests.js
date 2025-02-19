@@ -1,5 +1,4 @@
-const DEFAULT_URL = ""
-
+const DEFAULT_URL = "http://localhost:8000";
 
 const TG = window.Telegram.WebApp
 
@@ -14,9 +13,9 @@ async function request(endpoint, method = "GET", data = {}) {
         body: data ? JSON.stringify(data) : null,
     }
 
-    const response = await fetch(`${DEFAULT_URL}/api/${endpoint}`, options)
+    const response = await fetch(`${DEFAULT_URL}/${endpoint}`, options)
     const json = await response.json()
-
+    console.log(json)
     if (response.status === 200) {
         return json.data
     }
