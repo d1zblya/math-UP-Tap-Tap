@@ -7,12 +7,16 @@ from pydantic import BaseModel, Field
 
 class UserBase(BaseModel):
     tg_id: Optional[int] = Field(None)
+    first_name: Optional[str] = Field(None)
     points: Optional[int] = Field(None)
     bio: Optional[str] = Field(None)
 
 
 class UserCreate(UserBase):
     tg_id: int
+    first_name: str
+    points: int = Field(default=0)
+    bio: str = Field(default="Описание вашего профиля")
 
 
 class UserUpdate(UserBase):
@@ -22,6 +26,7 @@ class UserUpdate(UserBase):
 
 class User(UserBase):
     tg_id: int
+    first_name: str
     points: int
     registration_date: datetime
     avatar_url: str
@@ -33,6 +38,9 @@ class User(UserBase):
 
 class UserCreateDB(UserBase):
     tg_id: int
+    first_name: str
+    points: int = Field(default=0)
+    bio: str = Field(default="Описание вашего профиля")
 
 
 class UserUpdateDB(UserBase):
