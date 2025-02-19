@@ -5,7 +5,7 @@ function UserPanel({username, avatarUrl}) {
     return (
         <div className="UserPanel">
             <Avatar imageUrl={avatarUrl} size={50}/>
-            <span>{username}</span>
+            <span className={"username"}>{username}</span>
             <span className="info">
                 <svg width="30" height="30" viewBox="0 0 55 55" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="1" y="1" width="53" height="53" rx="11" stroke="white" strokeWidth="2"/>
