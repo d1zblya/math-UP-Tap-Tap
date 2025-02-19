@@ -18,7 +18,7 @@ class UserService:
                 raise HTTPException(
                     status_code=status.HTTP_409_CONFLICT, detail="User already exists")
 
-            await UserDAO.add(session, UserCreateDB(tg_id=user.tg_id, username=user.username, bio=user.bio))
+            await UserDAO.add(session, UserCreateDB(tg_id=user.tg_id, first_name=user.first_name))
             await session.commit()
 
     @classmethod

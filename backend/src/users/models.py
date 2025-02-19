@@ -7,9 +7,10 @@ class UserModel(Base):
     __tablename__ = 'users'
 
     tg_id = Column(BigInteger, primary_key=True, index=True, unique=True)
-    points = Column(Integer, default=0)
-    registration_date = Column(DateTime, default=func.now())
-    bio = Column(String, default="Описание вашего профиля")
+    first_name = Column(String(100), nullable=False)
+    points = Column(Integer, server_default="0")
+    registration_date = Column(DateTime, server_default=func.now())
+    bio = Column(String(256), default="Описание вашего профиля")
 
 
 class UserHistoryModel(Base):

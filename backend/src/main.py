@@ -10,7 +10,7 @@ from loguru import logger
 from src.tasks.router import task_router
 from src.theory.router import theory_router
 from src.users.router import auth_router, user_router
-from src.utils import validate_mini_app_data
+# from src.utils import validate_mini_app_data
 
 app = FastAPI(title="mathUP-Mini-App", version="0.0.1")
 
