@@ -47,10 +47,6 @@ function Task() {
 
             if (parseFloat(answer) === correctAnswer) {
                 setResult(true);
-                answerStyle = {
-                    boxShadow: '0 0 20px green',
-                    transition: 'box-shadow 0.2s ease-in-out',
-                };
                 window.Telegram.WebApp.HapticFeedback.impactOccurred('light')
                 setTimeout(() => {
                     generateExample()
@@ -58,10 +54,6 @@ function Task() {
                 }, 1000);
             } else {
                 setResult(false);
-                answerStyle = {
-                    boxShadow: '0 0 20px red',
-                    transition: 'box-shadow 0.2s ease-in-out',
-                };
             }
         } else {
             setResult(null);
