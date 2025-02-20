@@ -13,6 +13,12 @@ function Task() {
         generateExample();
     }, []);
 
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            alert(`Вы нажали Enter!`);
+            checkAnswer();
+        }
+    };
     const generateExample = () => {
         const newNum1 = Math.floor(Math.random() * 10) + 1;
         const newNum2 = Math.floor(Math.random() * 10) + 1;
@@ -62,18 +68,20 @@ function Task() {
     return (
         <div className={"task-block"}>
             {result === true &&
-                <div className="Task" style={{boxShadow: "0 0 40px green", transition: 'box-shadow 0.2s ease-in-out'}}>
+                <div className="Task" style={{boxShadow: "0 0 25px #20BB54", border: "1px solid #20BB54", transition: 'box-shadow border 1s ease-in-out'}}>
                     <div className="example">
                         <p className={"example-text"}>{`${num1} ${operator} ${num2} = `}</p>
                         <input
+                            type="text"
                             className="answer"
                             value={answer}
+                            onKeyUp={handleKeyPress}
                             onChange={(e) => setAnswer(e.target.value)}
                         />
                     </div>
                 </div>}
             {result === false &&
-                <div className="Task" style={{boxShadow: "0 0 40px red", transition: 'box-shadow 0.2s ease-in-out'}}>
+                <div className="Task" style={{boxShadow: "0 0 25px #D92923", border: "1px solid #D92923", transition: 'box-shadow border 1s ease-in-out'}}>
                     <div className="example">
                         <p className={"example-text"}>{`${num1} ${operator} ${num2} = `}</p>
                         <input
