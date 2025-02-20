@@ -11,8 +11,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Benzin", sans-serif;
-    font-weight: 200;
+    font-family: "Benzin-Regular", sans-serif;
 }
 
 body {
@@ -100,22 +99,36 @@ body {
     display: flex;
     align-items: center;
     flex-direction: column;
-    font-size: 24px;
-    padding: 20px;
-    background: var(--tg-theme-bg-color);
-    color: var(--tg-theme-text-color);
+    justify-content: center;
+    font-size: 30px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: "Benzin-Bold", sans-serif;
+    border: 1px solid #ffffff;
+    height: 150px;
 }
 
 .answer {
-    margin-top: 10px;
-    width: 30px;
-    height: 30px;
-    border-radius: 3px;
-    font-size: 20px;
-    background: var(--tg-theme-bg-color);
-    color: var(--tg-theme-text-color);
+    width: 45px;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 30px;
+    background: #000000;
+    color: #ffffff;
+    font-family: "Benzin-Bold", sans-serif;
+    border: 2px solid #B3B3B3;
+    margin-left: 10px;
+    margin-bottom: 2px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.answer:focus {
+    border: 2px solid #ffffff;
+    box-shadow: none;
+    background: #000000;
 }
 .BalancePanel {
     display: flex;
@@ -127,10 +140,13 @@ body {
     border-top: solid 1px var(--main-border-color);
     border-bottom: solid 1px var(--main-border-color);
 }
+
 .balance {
-    font-weight: bold;
+    font-family: "Benzin-Bold", sans-serif;
     font-size: 25px;
+    margin-top: 5px;
 }
+
 .balance-title {
     font-weight: 300;
     font-size: 13px;
@@ -138,6 +154,7 @@ body {
     top: 96px;
     position: absolute;
 }
+
 .decor-border {
     height: 100px;
     width: 88vw;
@@ -147,33 +164,52 @@ body {
     left: 6vw;
     top: 90px;
 }
+
 .username {
     font-family: 'SF Pro Display', sans-serif;
 }
 
-
+.example {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+.example-text {
+    font-family: 'Benzin-Bold', sans-serif;
+}
+.btn-check-answer {
+    background: linear-gradient(270deg, #7B00FF 0%, #140099 100%);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 14px 30px 14px 30px;
+    border-radius: 40px;
+    margin-top: 20px;
+}
+.task-block {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
 
 
 @font-face {
-    font-family: 'Benzin';
+    font-family: 'Benzin-Bold';
     src: url('./fonts/benzin/Benzin-Bold.woff2') format('woff2'),
     url('./fonts/benzin/Benzin-Bold.ttf') format('ttf');
-    font-weight: 400;
-    font-style: normal;
 }
+
 @font-face {
-    font-family: 'Benzin';
+    font-family: 'Benzin-Medium';
     src: url('./fonts/benzin/Benzin-Medium.woff2') format('woff2'),
     url('./fonts/benzin/Benzin-Medium.ttf') format('ttf');
-    font-weight: 300;
-    font-style: normal;
 }
+
 @font-face {
-    font-family: 'Benzin';
+    font-family: 'Benzin-Regular';
     src: url('./fonts/benzin/Benzin-Regular.woff2') format('woff2'),
     url('./fonts/benzin/Benzin-Regular.ttf') format('ttf');
-    font-weight: 200;
-    font-style: normal;
 }
 
 @font-face {

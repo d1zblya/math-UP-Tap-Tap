@@ -11,20 +11,6 @@ function Task() {
     var answerStyle = {}
 
 
-    switch (result) {
-        case true:
-            answerStyle = {
-                boxShadow: '0 0 20px green',
-                transition: 'box-shadow 0.2s ease-in-out',
-            };
-            break;
-        case false:
-            answerStyle = {
-                boxShadow: '0 0 20px red',
-                transition: 'box-shadow 0.2s ease-in-out',
-            };
-    }
-
 
     useEffect(() => {
         generateExample();
@@ -42,8 +28,7 @@ function Task() {
         setAnswer(null);
         setResult(null);
     };
-
-    useEffect(() => {
+    const checkAnswer = () => {
         if (answer) {
             let correctAnswer;
             switch (operator) {
@@ -65,6 +50,10 @@ function Task() {
 
             if (parseFloat(answer) === correctAnswer) {
                 setResult(true);
+                answerStyle = {
+                    boxShadow: '0 0 20px green',
+                    transition: 'box-shadow 0.2s ease-in-out',
+                };
                 window.Telegram.WebApp.HapticFeedback.impactOccurred('light')
                 setTimeout(() => {
                     generateExample()
@@ -72,26 +61,51 @@ function Task() {
                 }, 1000);
             } else {
                 setResult(false);
+                answerStyle = {
+                    boxShadow: '0 0 20px red',
+                    transition: 'box-shadow 0.2s ease-in-out',
+                };
             }
         } else {
             setResult(null);
         }
-    }, [answer]);
-
-    const handleChange = (event) => {
-        setAnswer(event.target.value)
     };
-
     return (
-        <div className="Task" style={answerStyle}>
-            <p>{`${num1} ${operator} ${num2} = ?`}</p>
-            <input
-                className="answer"
-                value={answer}
-                onChange={handleChange}
-            />
-            {/*{result === true && <p style={{color: 'green'}}>Правильно!</p>}*/}
-            {/*{result === false && <p style={{color: 'red'}}>Неправильно!</p>}*/}
+        <div className={"task-block"}>
+            {result === true &&
+                <div className="Task" style={{boxShadow: "0 0 40px green", transition: 'box-shadow 0.2s ease-in-out'}}>
+                    <div className="example">
+                        <p className={"example-text"}>{`${num1} ${operator} ${num2} = `}</p>
+                        <input
+                            className="answer"
+                            value={answer}
+                            onChange={(e) => setAnswer(e.target.value)}
+                        />
+                    </div>
+                </div>}
+            {result === false &&
+            <div className="Task" style={{boxShadow: "0 0 40px red", transition: 'box-shadow 0.2s ease-in-out'}}>
+                <div className="example">
+                    <p className={"example-text"}>{`${num1} ${operator} ${num2} = `}</p>
+                    <input
+                        className="answer"
+                        value={answer}
+                        onChange={(e) => setAnswer(e.target.value)}
+                    />
+                </div>
+            </div>}
+            {result === null &&
+                <div className="Task">
+                    <div className="example">
+                        <p className={"example-text"}>{`${num1} ${operator} ${num2} = `}</p>
+                        <input
+                            className="answer"
+                            value={answer}
+                            onChange={(e) => setAnswer(e.target.value)}
+                        />
+                    </div>
+                </div>}
+            <button className={'btn-check-answer'} onClick={checkAnswer}>Проверить</button>
         </div>
     );
 }
