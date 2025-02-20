@@ -130,6 +130,7 @@ body {
     box-shadow: none;
     background: #000000;
 }
+
 .BalancePanel {
     display: flex;
     align-items: center;
@@ -175,9 +176,11 @@ body {
     justify-content: center;
     flex-direction: row;
 }
+
 .example-text {
     font-family: 'Benzin-Bold', sans-serif;
 }
+
 .btn-check-answer {
     background: linear-gradient(270deg, #7B00FF 0%, #140099 100%);
     color: white;
@@ -187,6 +190,7 @@ body {
     border-radius: 40px;
     margin-top: 20px;
 }
+
 .task-block {
     display: flex;
     align-items: center;

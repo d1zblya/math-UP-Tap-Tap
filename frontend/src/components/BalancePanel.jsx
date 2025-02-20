@@ -6,4 +6,5 @@ function BalancePanel({balance}) {
         </div>
     )
 }
+
 export default BalancePanel

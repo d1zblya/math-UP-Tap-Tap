@@ -8,9 +8,6 @@ function Task() {
     const [answer, setAnswer] = useState(null);
     const [result, setResult] = useState(null);
 
-    var answerStyle = {}
-
-
 
     useEffect(() => {
         generateExample();
@@ -84,16 +81,16 @@ function Task() {
                     </div>
                 </div>}
             {result === false &&
-            <div className="Task" style={{boxShadow: "0 0 40px red", transition: 'box-shadow 0.2s ease-in-out'}}>
-                <div className="example">
-                    <p className={"example-text"}>{`${num1} ${operator} ${num2} = `}</p>
-                    <input
-                        className="answer"
-                        value={answer}
-                        onChange={(e) => setAnswer(e.target.value)}
-                    />
-                </div>
-            </div>}
+                <div className="Task" style={{boxShadow: "0 0 40px red", transition: 'box-shadow 0.2s ease-in-out'}}>
+                    <div className="example">
+                        <p className={"example-text"}>{`${num1} ${operator} ${num2} = `}</p>
+                        <input
+                            className="answer"
+                            value={answer}
+                            onChange={(e) => setAnswer(e.target.value)}
+                        />
+                    </div>
+                </div>}
             {result === null &&
                 <div className="Task">
                     <div className="example">
