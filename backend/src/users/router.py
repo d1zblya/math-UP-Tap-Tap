@@ -22,7 +22,7 @@ async def get_current_user(
 ) -> User:
     init_data = request.headers.get("Authorization")
     if not init_data:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authorization header missing")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Authorization header missing")
 
     user_data = verify_telegram_init_data(init_data)
     telegram_id = int(user_data["user"]["id"])

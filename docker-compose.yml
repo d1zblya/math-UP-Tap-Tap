@@ -2,32 +2,40 @@ version: '3.8'
 
 services:
   db:
-    image: postgres:16-alpine
+    image: postgres:16
     restart: always
     env_file:
-      - backend/.env
+      - .env
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: mathupDB
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   backend:
+    container_name: backend
     build: ./backend
     ports:
       - "8000:8000"
     env_file:
-      - backend/.env
+      - .env
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - ./backend/src:/app/src
     restart: always
 
   frontend:
+    container_name: frontend
     build: ./frontend
     ports:
       - "5173:5173"
@@ -37,6 +45,15 @@ services:
     depends_on:
       - backend
     restart: always
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    env_file:
+      - .env
+    restart: always
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"
 
 volumes:
   pg_data:

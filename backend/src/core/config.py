@@ -22,6 +22,13 @@ class DBSettings(BaseSettings):
                 f"{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}")
 
 
+class RedisSettings(BaseSettings):
+    REDIS_HOST: str
+    REDIS_PORT: int
+    REDIS_DB: int
+    REDIS_PASSWORD: str
+
+
 class LoggingSettings(BaseSettings):
     LOGGING_LEVEL: int = logging.INFO
 
@@ -35,7 +42,9 @@ class Settings(BaseSettings):
     BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = [
         "http://localhost:3000",
         "http://localhost:8001",
-        "http://localhost:8000"
+        "http://localhost:8000",
+        "http://localhost:8089",
+        "http://localhost:5173"
     ]
 
     @field_validator("BACKEND_CORS_ORIGINS", mode="before")
@@ -48,6 +57,7 @@ class Settings(BaseSettings):
 
     db: DBSettings = DBSettings()
     logging: LoggingSettings = LoggingSettings()
+    redis: RedisSettings = RedisSettings()
 
     model_config = SettingsConfigDict(env_file=".env", extra="allow")
 
