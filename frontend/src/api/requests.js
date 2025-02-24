@@ -1,24 +1,25 @@
 const DEFAULT_URL = "http://localhost:8000";
 
-const TG = window.Telegram.WebApp
-
 async function request(endpoint, method = "GET", data = {}) {
+    const TG = window.Telegram.WebApp
     const options = {
         method: method,
         headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization": TG.initData,
+            'Authorization': TG.initData,
+            'Content-Type': 'application/json',
         },
-        body: data ? JSON.stringify(data) : null,
-    }
+        body: method === "GET" ? null : JSON.stringify(data),
+    };
 
-    const response = await fetch(`${DEFAULT_URL}/${endpoint}`, options)
-    const json = await response.json()
-    console.log(json)
+    const response = await fetch(`${DEFAULT_URL}/${endpoint}`, options);
+    const json = await response.json();
+    console.log(json);
+
     if (response.status === 200) {
-        return json.data
+        return json.data;
+    } else {
+        throw new Error(`Ошибка: ${response.status} - ${json.message || "Неизвестная ошибка"}`);
     }
 }
 
-export {TG, request}
+export {request}

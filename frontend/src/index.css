@@ -189,6 +189,9 @@ body {
     border-radius: 40px;
     margin-top: 20px;
 }
+.btn-check-answer:hover {
+    background: linear-gradient(270deg, #7B00FF 0%, #140099 50%);
+}
 
 .task-block {
     display: flex;

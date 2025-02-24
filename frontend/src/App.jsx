@@ -23,28 +23,20 @@ function App() {
             setAvatarUrl(user.photo_url);
         }
     }, []);
-    const [user, setUser] = useState({
-        "tg_id": 0,
-        "points": 1000,
-        "bio": "string",
-        "registration_date": "2025-02-18T19:29:38.416Z",
-        "avatar_url": "string"
-    });
+    const [user, setUser] = useState(null)
     useEffect(() => {
         async function fetchData() {
-            const response = await request("users/me");
+            const response = await request("users/me", "GET");
             setUser(response);
         }
-
         fetchData();
     }, [])
-
     return (
         <div className="container">
             <header className="top-panel">
                 <UserPanel username={username} avatarUrl={avatarUrl}/>
                 <div className="decor-border"></div>
-                <BalancePanel balance={user.points}/>
+                <BalancePanel balance={user}/>
             </header>
             <main className="content">
                 <Routes>
