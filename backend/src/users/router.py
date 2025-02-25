@@ -21,6 +21,7 @@ async def get_current_user(
         request: Request,
 ) -> User:
     init_data = request.headers.get("Authorization")
+    print(init_data)
     if not init_data:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Authorization header missing")
 
