@@ -5,30 +5,25 @@ from fastapi import HTTPException, status
 from src.database.session import async_session_maker
 from src.users.dao import UserDAO, UserHistoryDAO
 from src.users.models import UserModel
-from src.users.schemas import UserCreate, UserCreateDB, User, UserUpdate, UserUpdateDB, UserHistory, UserHistoryDB, \
-    UserHistoryCreate
+from src.users.schemas import UserCreate, User, UserUpdate, UserHistory, UserHistoryCreate
 
 
 class UserService:
     @classmethod
-    async def register_new_user(cls, user: UserCreate) -> None:
+    async def get_or_create_user(cls, user: UserCreate) -> User:
         async with async_session_maker() as session:
             user_exist = await UserDAO.find_one_or_none(session, tg_id=user.tg_id)
-            if user_exist:
-                raise HTTPException(
-                    status_code=status.HTTP_409_CONFLICT, detail="User already exists")
-
-            await UserDAO.add(session, UserCreateDB(tg_id=user.tg_id, first_name=user.first_name))
-            await session.commit()
-
-    @classmethod
-    async def get_user(cls, tg_id: int) -> User:
-        async with async_session_maker() as session:
-            db_user = await UserDAO.find_one_or_none(session, tg_id=tg_id)
-        if db_user is None:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
-        return db_user
+            if user_exist is None:
+                new_user = await UserDAO.add(
+                    session,
+                    UserCreate(
+                        tg_id=user.tg_id,
+                        first_name=user.first_name,
+                    )
+                )
+                await session.commit()
+                return new_user
+            return user_exist
 
     @classmethod
     async def update_user(cls, tg_id: int, user: UserUpdate) -> User:
@@ -38,7 +33,7 @@ class UserService:
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
-            user_in = UserUpdateDB(**user.model_dump())
+            user_in = UserUpdate(**user.model_dump())
 
             user_update = await UserDAO.update(
                 session,
@@ -99,7 +94,7 @@ class UserService:
         async with async_session_maker() as session:
             await UserHistoryDAO.add(
                 session,
-                UserHistoryDB(
+                UserHistoryCreate(
                     tg_id=user_history.tg_id,
                     task=user_history.task,
                     true_answer=user_history.true_answer,
@@ -107,5 +102,3 @@ class UserService:
                 )
             )
             await session.commit()
-
-

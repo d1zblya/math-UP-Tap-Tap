@@ -10,6 +10,8 @@ from alembic import context
 sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 
 from src.core.config import settings
+from src.users.models import UserModel, UserHistoryModel
+from src.theory.models import TheoryModel
 from src.database.session import Base
 
 # this is the Alembic Config object, which provides

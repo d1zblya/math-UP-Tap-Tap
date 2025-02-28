@@ -1,11 +1,11 @@
 from src.database.base_dao import BaseDAO
 from src.users.models import UserModel, UserHistoryModel
-from src.users.schemas import User, UserCreateDB, UserUpdateDB, UserHistoryDB
+from src.users.schemas import User, UserHistoryCreate, UserCreate, UserUpdate
 
 
-class UserDAO(BaseDAO[User, UserCreateDB, UserUpdateDB]):
+class UserDAO(BaseDAO[User, UserCreate, UserUpdate]):
     model = UserModel
 
 
-class UserHistoryDAO(BaseDAO[User, UserHistoryDB, None]):
+class UserHistoryDAO(BaseDAO[User, UserHistoryCreate, None]):
     model = UserHistoryModel

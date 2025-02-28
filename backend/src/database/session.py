@@ -10,7 +10,7 @@ if connection_uri.startswith("postgres://"):
 engine = create_async_engine(
     connection_uri,
 )
-async_session_maker = async_sessionmaker(engine, autocommit=False)
+async_session_maker = async_sessionmaker(engine, autocommit=False, expire_on_commit=False)
 
 
 class Base(DeclarativeBase):

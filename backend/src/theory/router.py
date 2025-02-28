@@ -7,7 +7,7 @@ from src.theory.schemas import Theory
 from src.theory.service import TheoryService
 
 theory_router = APIRouter(
-    prefix="/theories",
+    prefix="/api/theories",
     tags=["theory"]
 )
 

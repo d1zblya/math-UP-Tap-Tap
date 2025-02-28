@@ -12,6 +12,17 @@ class UserBase(BaseModel):
     bio: Optional[str] = Field(None)
 
 
+class User(UserBase):
+    tg_id: int
+    first_name: str
+    points: int
+    registration_date: datetime
+    bio: str
+
+    class Config:
+        from_attributes = True
+
+
 class UserCreate(UserBase):
     tg_id: int
     first_name: str
@@ -20,30 +31,6 @@ class UserCreate(UserBase):
 
 
 class UserUpdate(UserBase):
-    tg_id: int
-    bio: Optional[str]
-
-
-class User(UserBase):
-    tg_id: int
-    first_name: str
-    points: int
-    registration_date: datetime
-    avatar_url: str
-    bio: str
-
-    class Config:
-        from_attributes = True
-
-
-class UserCreateDB(UserBase):
-    tg_id: int
-    first_name: str
-    points: int = Field(default=0)
-    bio: str = Field(default="Описание вашего профиля")
-
-
-class UserUpdateDB(UserBase):
     tg_id: int
     bio: str
 
@@ -67,7 +54,3 @@ class UserHistoryCreate(UserHistoryBase):
     task: str
     true_answer: int
     user_answer: int
-
-
-class UserHistoryDB(UserHistoryBase):
-    tg_id: int

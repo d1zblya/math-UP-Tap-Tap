@@ -1,8 +1,8 @@
-"""init migration
+"""init tables
 
-Revision ID: e21b1384c29b
-Revises: 1ff51e7789c6
-Create Date: 2025-02-17 13:54:30.751971
+Revision ID: d3fd183608e6
+Revises: 5d8935180eb5
+Create Date: 2025-02-28 00:15:25.737907
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'e21b1384c29b'
-down_revision: Union[str, None] = '1ff51e7789c6'
+revision: str = 'd3fd183608e6'
+down_revision: Union[str, None] = '5d8935180eb5'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
@@ -29,9 +29,10 @@ def upgrade() -> None:
     )
     op.create_table('users',
     sa.Column('tg_id', sa.BigInteger(), nullable=False),
-    sa.Column('points', sa.Integer(), nullable=True),
-    sa.Column('registration_date', sa.DateTime(), nullable=True),
-    sa.Column('bio', sa.String(), nullable=True),
+    sa.Column('first_name', sa.String(length=100), nullable=False),
+    sa.Column('points', sa.Integer(), server_default='0', nullable=True),
+    sa.Column('registration_date', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
+    sa.Column('bio', sa.String(length=256), nullable=True),
     sa.PrimaryKeyConstraint('tg_id')
     )
     op.create_index(op.f('ix_users_tg_id'), 'users', ['tg_id'], unique=True)

@@ -5,7 +5,7 @@ from fastapi import APIRouter
 from src.tasks.schemas import TaskLinearEquation, TaskQuadraticEquation
 from src.tasks.service import TaskService
 
-task_router = APIRouter(prefix="/tasks", tags=["tasks"])
+task_router = APIRouter(prefix="/api/tasks", tags=["tasks"])
 
 
 @task_router.get("/linear-equation")

@@ -1,16 +1,14 @@
-import hashlib
-import hmac
+import json
+import time
+import base64
+import nacl.signing
+import nacl.encoding
+from urllib.parse import parse_qsl, unquote
 from fastapi import HTTPException, status
 from src.core.config import settings
+from nacl.exceptions import BadSignatureError
 
-
-# def validate_mini_app_data(data: str):  # noqa
-#     vals = {k: unquote(v) for k, v in [s.split("=", 1) for s in data.split("&")]}
-#     data_check_string = "\n".join(f"{k}={v}" for k, v in sorted(vals.items()) if k != "hash")
-#
-#     secret_key = hmac.new("WebAppData".encode(), settings.BOT_TOKEN.encode(), hashlib.sha256).digest()
-#     h = hmac.new(secret_key, data_check_string.encode(), hashlib.sha256)
-#     return h.hexdigest() == vals["hash"], vals
+from loguru import logger
 
 
 def verify_telegram_init_data(init_data: str) -> dict:
@@ -18,14 +16,51 @@ def verify_telegram_init_data(init_data: str) -> dict:
     Проверяет корректность `initData` из Telegram.
     """
     try:
-        data_dict = dict(item.split("=") for item in init_data.split("&"))
-        check_string = "\n".join(f"{k}={v}" for k, v in sorted(data_dict.items()) if k != "hash")
-        secret_key = hashlib.sha256(settings.BOT_TOKEN.encode()).digest()
-        expected_hash = hmac.new(secret_key, check_string.encode(), hashlib.sha256).hexdigest()
+        # Декодируем URL-encoded строку
+        init_data = unquote(init_data)
 
-        if data_dict.get("hash") != expected_hash:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid initData")
+        # Разбираем строку в словарь
+        data_dict = dict(parse_qsl(init_data))
+
+        if "signature" not in data_dict:
+            logger.error("Missing 'signature' in initData")
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Missing 'signature' in initData")
+
+        received_signature = data_dict.pop("signature")  # Забираем подпись
+
+        # Формируем строку check_string
+        check_string = f"{settings.BOT_ID}:WebAppData\n" + "\n".join(
+            f"{k}={v}" for k, v in sorted(data_dict.items()) if k != "hash"
+        )
+
+        # Декодируем подпись из base64url
+        try:
+            signature_bytes = base64.urlsafe_b64decode(received_signature + "==")  # Добавляем padding
+        except Exception:
+            logger.error("Invalid signature encoding")
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid signature encoding")
+
+        public_key_bytes = bytes.fromhex(settings.TELEGRAM_PUBLIC_KEY)
+
+        # Проверяем подпись с помощью Ed25519
+        try:
+            verify_key = nacl.signing.VerifyKey(public_key_bytes, encoder=nacl.encoding.RawEncoder)
+            verify_key.verify(check_string.encode(), signature_bytes)
+        except BadSignatureError:
+            logger.error("Invalid signature")
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid signature")
+
+        # Проверяем, не устарели ли данные (разрешаем 24 часа)
+        auth_date = int(data_dict.get("auth_date", 0))
+        if abs(auth_date - int(time.time())) > 60 * 60 * 24:
+            logger.error("Expired initData")
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Expired initData")
+
+        data_dict["user"] = json.loads(data_dict["user"])
 
         return data_dict
-    except Exception:
+
+    except Exception as e:
+        logger.error(f"Error verifying initData: {e}")
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid initData format")
+
