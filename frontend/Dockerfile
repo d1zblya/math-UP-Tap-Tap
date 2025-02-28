@@ -1,12 +1,23 @@
-FROM node:18-bullseye
+FROM node:18-bullseye as builder
+
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY ./package*.json ./
 RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+RUN npm run build
 
-CMD ["npm", "run", "dev", "--", "--host"]
+# Используем легковесный образ для статических файлов
+FROM nginx:alpine
+
+# Копируем собранные файлы из предыдущего этапа
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Открываем порт 80
+EXPOSE 80
+
+# Запускаем nginx
+CMD ["nginx", "-g", "daemon off;"]
