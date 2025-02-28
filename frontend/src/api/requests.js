@@ -1,25 +1,31 @@
-const DEFAULT_URL = "http://localhost:8000";
+import axios from 'axios';
+
+const DEFAULT_URL = ""; // URL api
 
 async function request(endpoint, method = "GET", data = {}) {
-    const TG = window.Telegram.WebApp
-    const options = {
-        method: method,
-        headers: {
-            'Authorization': TG.initData,
-            'Content-Type': 'application/json',
-        },
-        body: method === "GET" ? null : JSON.stringify(data),
-    };
+    const TG = window.Telegram.WebApp;
+    try {
+        const response = await axios({
+            method: method.toLowerCase(),
+            url: `${DEFAULT_URL}/${endpoint}`,
+            headers: {
+                'Authorization': TG.initData,
+                'Content-Type': 'application/json',
+            },
+            data: method === "GET" ? null : data,
+        });
 
-    const response = await fetch(`${DEFAULT_URL}/${endpoint}`, options);
-    const json = await response.json();
-    console.log(json);
 
-    if (response.status === 200) {
-        return json.data;
-    } else {
-        throw new Error(`Ошибка: ${response.status} - ${json.message || "Неизвестная ошибка"}`);
+        if (response.status === 200) {
+            return response.data.data;
+        } else {
+            throw new Error(`Ошибка: ${response.status} - ${response.data.message || "Неизвестная ошибка"}`);
+        }
+
+    } catch (error) {
+        console.error('Ошибка при выполнении запроса:', error);
+        throw error;
     }
 }
 
-export {request}
+export { request };
