@@ -1,13 +1,29 @@
 from pydantic import BaseModel
+from enum import Enum
 
 
-class TaskLinearEquation(BaseModel):
-    equation: str
-    equation_latex: str
-    roots: list
+class TaskType(Enum):
+    LINEAR_EQUATION = "LinearEquation"
+    QUADRATIC_EQUATION = "QuadraticEquation"
+    SIMPLE_EXAMPLE = "SimpleExample"
 
 
-class TaskQuadraticEquation(BaseModel):
-    equation: str
-    equation_latex: str
-    roots: list
+class TaskComplexity(Enum):
+    EASY = "Easy"
+    MEDIUM = "Medium"
+    HARD = "Hard"
+
+
+class BaseTaskExample(BaseModel):
+    type: TaskType
+    expression: str
+    expression_latex: str
+    answers: list[int]
+
+
+class FinalExpression(BaseModel):
+    complexity: TaskComplexity
+    type: TaskType
+    expression: str
+    expression_latex: str
+    answers: list[int]
