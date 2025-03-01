@@ -150,7 +150,7 @@ class TaskGeneratorService:
 
     @classmethod
     async def generate_simple_example(cls, step: int) -> BaseTaskExample:
-        answer = random.randint(1, 1000)
+        answer = random.randint(1, 200)
 
         my_expression = rnd_complication_with_steps(answer, step)
         expression = parse_latex(my_expression)

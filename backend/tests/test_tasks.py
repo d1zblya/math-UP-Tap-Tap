@@ -10,31 +10,34 @@ from src.main import app
 
 client = TestClient(app)
 
+BASE_TASK_KEYS = {"type", "expression", "expression_latex", "answers"}
+FINAL_EXPRESSION_KEYS = BASE_TASK_KEYS | {"complexity"}
 
-def test_get_linear_equation():
-    response = client.get("/tasks/linear-equation")
-    assert response.status_code == 200
+ENDPOINTS = [
+    ("/api/tasks/linear-equations", BASE_TASK_KEYS),
+    ("/api/tasks/quadratic-equations", BASE_TASK_KEYS),
+    ("/api/tasks/simple-examples", BASE_TASK_KEYS),
+    ("/api/tasks/easy-examples", FINAL_EXPRESSION_KEYS),
+    ("/api/tasks/medium-examples", FINAL_EXPRESSION_KEYS),
+    ("/api/tasks/hard-examples", FINAL_EXPRESSION_KEYS),
+]
+
+
+@pytest.mark.parametrize("endpoint,expected_keys", ENDPOINTS)
+def test_task_service_endpoints(endpoint, expected_keys):
+    """Универсальный тест для всех эндпоинтов TaskService"""
+    response = client.get(endpoint)
+    assert response.status_code == 200, f"Ошибка {response.status_code}, ответ: {response.text}"
+
     json_data = response.json()
+    assert isinstance(json_data, dict) and json_data, "Ответ API должен быть непустым словарем"
 
-    if json_data:
-        assert "equation" in json_data
-        assert "equation_latex" in json_data
-        assert "roots" in json_data
-        assert isinstance(json_data["equation"], str)
-        assert isinstance(json_data["equation_latex"], str)
-        assert isinstance(json_data["roots"], (list, int))
+    assert expected_keys.issubset(json_data.keys()), f"Нет ожидаемых ключей {expected_keys}, ответ: {json_data}"
 
+    assert isinstance(json_data["expression"], str)
+    assert isinstance(json_data["expression_latex"], str)
+    assert isinstance(json_data["answers"], list) and all(isinstance(x, (int, float)) for x in json_data["answers"])
 
-def test_get_quadratic_equation():
-    response = client.get("/tasks/quadratic-equation")
-    assert response.status_code == 200
-    json_data = response.json()
-
-    if json_data:
-        assert "equation" in json_data
-        assert "equation_latex" in json_data
-        assert "roots" in json_data
-        assert isinstance(json_data["equation"], str)
-        assert isinstance(json_data["equation_latex"], str)
-        assert isinstance(json_data["roots"], list)
-        assert all(isinstance(x, (int, float)) for x in json_data["roots"])
+    if "complexity" in json_data:
+        assert json_data["complexity"] in {"Easy", "Medium", "Hard"}, \
+            f"Некорректная сложность: {json_data['complexity']}"

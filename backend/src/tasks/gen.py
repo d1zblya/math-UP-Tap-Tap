@@ -40,7 +40,7 @@ def difficult_div(num: float) -> str:
     int_part = int(num)
     frac_part = num - int_part
 
-    b = randint(2, 50)
+    b = randint(2, 30)
     a = int_part * b
 
     fraction_expr = '\\frac{' + str(a) + '}{' + str(b) + '}'
