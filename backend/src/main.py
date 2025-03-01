@@ -3,8 +3,7 @@ import json
 import uvicorn
 from fastapi import FastAPI, Request, HTTPException, status
 from starlette.middleware.cors import CORSMiddleware
-from starlette.responses import RedirectResponse
-from starlette.responses import JSONResponse
+from starlette.responses import RedirectResponse, JSONResponse
 
 from src.core.cache import init_cache
 from src.core.config import settings
@@ -46,8 +45,13 @@ async def data_validation_middleware(request: Request, call_next):
     if request.url.path.startswith("/api/users"):
         init_data = request.headers.get("Authorization")
 
-        if not init_data:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Authorization header missing")
+        if init_data is None:
+            msg = "Authorization header missing"
+            logger.error(msg)
+            return JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={"detail": msg}
+            )
 
         user_data = verify_telegram_init_data(init_data)
 
@@ -67,4 +71,4 @@ async def root():
 
 if __name__ == "__main__":
     logger.add("file_main.log", retention="7 days")
-    uvicorn.run("main:app")
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
