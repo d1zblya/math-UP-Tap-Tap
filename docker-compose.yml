@@ -36,7 +36,7 @@ services:
     container_name: frontend
     build: ./frontend
     volumes:
-      - ./frontend/dist:/app/dist  # Монтируем собранные файлы React
+      - ./frontend/dist:/app/dist
     restart: always
 
   redis:
@@ -52,9 +52,13 @@ services:
     image: nginx:alpine
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./frontend/dist:/usr/share/nginx/html
+      - ./nginx/ssl/certificate.crt:/etc/nginx/ssl/certificate.crt
+      - ./nginx/ssl/certificate.key:/etc/nginx/ssl/certificate.key
+      - ./nginx/ssl/certificate_ca.crt:/etc/nginx/ssl/certificate_ca.crt
     depends_on:
       - backend
       - frontend
