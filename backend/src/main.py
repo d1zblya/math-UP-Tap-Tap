@@ -1,9 +1,8 @@
-import json
-
 import uvicorn
 from fastapi import FastAPI, Request, HTTPException, status
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import RedirectResponse, JSONResponse
+from contextlib import asynccontextmanager
 
 from src.core.cache import init_cache
 from src.core.config import settings
@@ -15,13 +14,14 @@ from src.theory.router import theory_router
 from src.users.router import user_router
 from src.users.utils import verify_telegram_init_data
 
-app = FastAPI(title="mathUP-Mini-App", version="0.0.1")
 
-
-@app.on_event("startup")
-async def startup():
+@asynccontextmanager
+async def lifespan(_: FastAPI):
     await init_cache()
+    yield
 
+
+app = FastAPI(title="mathUP-Mini-App", version="0.0.1", lifespan=lifespan)
 
 app.include_router(user_router)
 app.include_router(theory_router)
@@ -50,7 +50,14 @@ async def data_validation_middleware(request: Request, call_next):
             logger.error(msg)
             return JSONResponse(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                content={"detail": msg}
+                content={
+                    "error": {
+                        "message": msg,
+                        "code": status.HTTP_400_BAD_REQUEST,
+                        "method": request.method,
+                        "path": str(request.url),
+                    }
+                }
             )
 
         user_data = verify_telegram_init_data(init_data)
@@ -62,6 +69,21 @@ async def data_validation_middleware(request: Request, call_next):
 
     response = await call_next(request)
     return response
+
+
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request: Request, exc: HTTPException):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "error": {
+                "message": exc.detail,
+                "code": exc.status_code,
+                "method": request.method,
+                "path": str(request.url),
+            }
+        }
+    )
 
 
 @app.get("/")
