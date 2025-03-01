@@ -6,8 +6,6 @@ services:
     restart: always
     env_file:
       - .env
-    ports:
-      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -37,13 +35,8 @@ services:
   frontend:
     container_name: frontend
     build: ./frontend
-    ports:
-      - "5173:5173"
     volumes:
-      - ./frontend/src:/app/src
-      - /app/node_modules
-    depends_on:
-      - backend
+      - ./frontend/dist:/app/dist
     restart: always
 
   redis:
@@ -54,6 +47,21 @@ services:
     restart: always
     ports:
       - "${REDIS_PORT}:${REDIS_PORT}"
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./frontend/dist:/usr/share/nginx/html
+      - ./nginx/ssl/certificate.crt:/etc/nginx/ssl/certificate.crt
+      - ./nginx/ssl/certificate.key:/etc/nginx/ssl/certificate.key
+      - ./nginx/ssl/certificate_ca.crt:/etc/nginx/ssl/certificate_ca.crt
+    depends_on:
+      - backend
+      - frontend
 
 volumes:
   pg_data:
