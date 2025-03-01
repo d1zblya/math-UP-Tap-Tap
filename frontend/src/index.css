@@ -48,9 +48,7 @@ body {
 .content {
     flex: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
+    flex-direction: column;
 }
 
 .navigation {
@@ -94,21 +92,6 @@ body {
     margin-left: auto;
 }
 
-.Task {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    font-size: 30px;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    font-family: "Benzin-Bold", sans-serif;
-    border: 1px solid #ffffff;
-    height: 150px;
-}
 
 .answer {
     width: 45px;
@@ -135,8 +118,7 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 80px;
-    margin-top: 20px;
+    height: 90px;
     border-top: solid 1px var(--main-border-color);
     border-bottom: solid 1px var(--main-border-color);
 }
@@ -144,19 +126,19 @@ body {
 .balance {
     font-family: "Benzin-Bold", sans-serif;
     font-size: 25px;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 .balance-title {
     font-weight: 300;
     font-size: 13px;
     color: #B3B3B3;
-    top: 96px;
+    top: 100px;
     position: absolute;
 }
 
 .decor-border {
-    height: 100px;
+    height: 95px;
     width: 88vw;
     border-left: 1px solid var(--main-border-color);
     border-right: 1px solid var(--main-border-color);
@@ -194,10 +176,29 @@ body {
 }
 
 .task-block {
+    height: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
+    justify-content: center;
 }
+.task {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 30px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: "Benzin-Bold", sans-serif;
+    border: 1px solid #ffffff;
+    height: 150px;
+}
+
+
 .nav-title {
     font-family: 'Benzin-Bold', sans-serif;
     font-size: 6px;
