@@ -19,7 +19,7 @@ def rounding_nums(*args: float, acc: int = 2) -> list[str]:
 
 def difficult_sum(num: float) -> str:
     """Усложнение суммой"""
-    rnd = [randint(1, 100), round(random() * 10, 2), round(random() * 100, 2)]
+    rnd = [randint(1, 10), randint(1, 100), round(random() * 10, 2), round(random() * 100, 2)]
     a = choice(rnd)
     b = num - a
     a, b = rounding_nums(a, b, acc=2)
@@ -28,7 +28,7 @@ def difficult_sum(num: float) -> str:
 
 def difficult_sub(num: float) -> str:
     """Усложнение вычитанием"""
-    rnd = [randint(1, 100), round(random() * 10, 2), round(random() * 100, 2)]
+    rnd = [randint(1, 10), randint(1, 100), round(random() * 10, 2), round(random() * 100, 2)]
     a = choice(rnd)
     b = a - num
     a, b = rounding_nums(a, b, acc=2)
@@ -63,7 +63,6 @@ def difficult_mul(num: float) -> str:
     return mul_expr
 
 
-# Список функций усложнения выражений
 funcs = [difficult_sum, difficult_div, difficult_mul, difficult_sub]
 
 

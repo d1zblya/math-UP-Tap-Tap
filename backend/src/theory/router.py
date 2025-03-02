@@ -13,7 +13,7 @@ theory_router = APIRouter(
 
 
 @theory_router.get("/{title}")
-async def get_one_theory(title) -> Optional[Theory]:
+async def get_one_theory(title) -> Theory:
     return await TheoryService.get_theory(title=title)
 
 
