@@ -27,7 +27,7 @@ ENDPOINTS = [
 def test_task_service_endpoints(endpoint, expected_keys):
     """Универсальный тест для всех эндпоинтов TaskService"""
     response = client.get(endpoint)
-    assert response.status_code == 200, f"Ошибка {response.status_code}, ответ: {response.text}"
+    assert response.status_code == 200
 
     json_data = response.json()
     assert isinstance(json_data, dict) and json_data, "Ответ API должен быть непустым словарем"
