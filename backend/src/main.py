@@ -1,67 +1,32 @@
-import json
-
 import uvicorn
-from fastapi import FastAPI, Request, HTTPException, status
-from starlette.middleware.cors import CORSMiddleware
-from starlette.responses import RedirectResponse, JSONResponse
+from fastapi import FastAPI
+from starlette.responses import RedirectResponse
+from contextlib import asynccontextmanager
 
 from src.core.cache import init_cache
-from src.core.config import settings
 
 from loguru import logger
 
+from src.core.middleware import setup_middlewares
 from src.tasks.router import task_router
 from src.theory.router import theory_router
 from src.users.router import user_router
-from src.users.utils import verify_telegram_init_data
-
-app = FastAPI(title="mathUP-Mini-App", version="0.0.1")
 
 
-@app.on_event("startup")
-async def startup():
-    await init_cache()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    redis_client = app.state.redis_client = await init_cache()
+    yield
+    await app.state.redis_client.close()
 
+
+app = FastAPI(title="mathUP-Mini-App", version="0.0.1", lifespan=lifespan)
+
+setup_middlewares(app)
 
 app.include_router(user_router)
 app.include_router(theory_router)
 app.include_router(task_router)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=settings.BACKEND_CORS_ORIGINS,
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    allow_headers=["Set-Cookie", "Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers",
-                   "Content-Type"]
-)
-
-
-@app.middleware("http")
-async def data_validation_middleware(request: Request, call_next):
-    if request.url.path in ["/docs", "/redoc", "/openapi.json"]:
-        return await call_next(request)
-
-    if request.url.path.startswith("/api/users"):
-        init_data = request.headers.get("Authorization")
-
-        if init_data is None:
-            msg = "Authorization header missing"
-            logger.error(msg)
-            return JSONResponse(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                content={"detail": msg}
-            )
-
-        user_data = verify_telegram_init_data(init_data)
-
-        user = user_data.get("user")
-
-        request.state.telegram_id = user.get("id")
-        request.state.first_name = user.get("first_name", "")
-
-    response = await call_next(request)
-    return response
 
 
 @app.get("/")

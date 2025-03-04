@@ -68,13 +68,12 @@ class UserService:
         if users is None:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND, detail="Users not found")
-        # return users
         return [
             User(
                 tg_id=db_user.tg_id,
-                username=db_user.username,
+                first_name=db_user.first_name,
+                points=db_user.points,
                 registration_date=db_user.registration_date,
-                avatar_url=db_user.avatar_url,
                 bio=db_user.bio,
             ) for db_user in users
         ]
