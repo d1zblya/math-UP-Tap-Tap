@@ -150,18 +150,6 @@ body {
 .username {
     font-family: 'SF Pro Display', sans-serif;
 }
-
-.example {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-}
-
-.example-text {
-    font-family: 'Benzin-Bold', sans-serif;
-}
-
 .btn-check-answer {
     background: linear-gradient(270deg, #7B00FF 0%, #140099 100%);
     color: white;
@@ -198,7 +186,12 @@ body {
     height: 150px;
 }
 
-
+.example-block {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
 .nav-title {
     font-family: 'Benzin-Bold', sans-serif;
     font-size: 6px;
@@ -207,7 +200,15 @@ body {
 .nav-icon {
     width: 60%;
 }
-
+.katex {
+    font-family: 'Benzin-Bold', sans-serif;
+    font-size: 18px;
+}
+.mx-1 {
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 3px;
+}
 
 @font-face {
     font-family: 'Benzin-Bold';

@@ -1,89 +1,30 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {request} from "../api/requests.js";
-import BalancePanel from "./BalancePanel.jsx";
+import React, {useRef, useState} from 'react';
+import BalancePanel from './BalancePanel';
+import LatexRenderer from './LatexRenderer';
+import {useApiUser} from '../hooks/useApiUser';
+import {useTask} from '../hooks/useTask';
 
-const OPERATORS = ['+', '-', '*', '/'];
 const HAPTIC_FEEDBACK_TYPE = 'light';
 const RESULT_STYLES = {
     true: {boxShadow: '0 0 25px #20BB54', border: '1px solid #20BB54'},
     false: {boxShadow: '0 0 25px #D92923', border: '1px solid #D92923'},
     null: {},
 };
-
-const useApiUser = () => {
-    const [user, setUser] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await request('users/me', 'GET');
-                setUser(response);
-            } catch (err) {
-                console.error('Failed to fetch user data:', err);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    return { user };
+const TASK_BLOCK_STYLES = {
+    true: {display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'},
+    false: {display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between'},
+    null: {},
 };
 
-function Play() {
-    const [num1, setNum1] = useState(0);
-    const [num2, setNum2] = useState(0);
-    const [operator, setOperator] = useState('+');
+const Play = () => {
     const [answer, setAnswer] = useState('');
     const [result, setResult] = useState(null);
-    const [task, setTask] = useState(null);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const {user} = useApiUser();
-
+    const {user, loading: userLoading, error: userError} = useApiUser();
+    const {task, loading: taskLoading, error: taskError, fetchTask} = useTask();
     const inputRef = useRef(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await request('tasks/linear-equation', 'GET');
-                setTask(response);
-            } catch (err) {
-                setError(err);
-                console.error('Failed to fetch user data:', err);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchData();
+    const isExample = task?.type === 'SimpleExample';
 
-    }, []);
-
-    const generateExample = () => {
-        const newNum1 = Math.floor(Math.random() * 10) + 1;
-        const newNum2 = Math.floor(Math.random() * 10) + 1;
-        const newOperator = OPERATORS[Math.floor(Math.random() * OPERATORS.length)];
-
-        setNum1(newNum1);
-        setNum2(newNum2);
-        setOperator(newOperator);
-        setAnswer('');
-        setResult(null);
-    };
-
-    const calculateCorrectAnswer = () => {
-        switch (operator) {
-            case '+':
-                return num1 + num2;
-            case '-':
-                return num1 - num2;
-            case '*':
-                return num1 * num2;
-            case '/':
-                return num1 / num2;
-            default:
-                return 0;
-        }
-    };
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
@@ -92,38 +33,42 @@ function Play() {
     };
 
     const checkAnswer = () => {
-        if (!answer) {
+        if (!answer || !task) {
             setResult(null);
             return;
         }
 
-        const correctAnswer = calculateCorrectAnswer();
-        const isCorrect = parseFloat(answer) === correctAnswer;
-
+        const isCorrect = parseInt(answer) === task.answers[0];
         setResult(isCorrect);
 
         if (isCorrect) {
             window.Telegram.WebApp.HapticFeedback.impactOccurred(HAPTIC_FEEDBACK_TYPE);
             setTimeout(() => {
-                generateExample();
+                fetchTask();
+                setAnswer('');
                 inputRef.current.focus();
             }, 1000);
         }
     };
-    if (loading) {
+
+    if (userLoading || taskLoading) {
         return <div>Loading...</div>;
     }
 
-    if (error) {
-        return <div>Error: {error.message}</div>;
+    if (userError || taskError) {
+        return <div>Error: {userError?.message || taskError?.message}</div>;
     }
+
 
     const renderTaskBlock = () => {
         const taskStyle = RESULT_STYLES[result] || {};
+        const taskBlockStyle = TASK_BLOCK_STYLES[isExample] || {};
+
         return (
-            <div className="Task" style={{...taskStyle, transition: 'box-shadow border 1s ease-in-out'}}>
-                <div className="example">
-                    <p className="example-text">{`${task.equation}`}</p>
+            <div className="task" style={{...taskStyle, transition: 'box-shadow border 1s ease-in-out'}}>
+                <div style={{...taskBlockStyle}}>
+                    <LatexRenderer expression={task.expression_latex}/>
+                    {isExample && <div className={"katex mx-1"}>=</div>}
                     <input
                         className="answer"
                         value={answer}
@@ -143,16 +88,13 @@ function Play() {
             <BalancePanel balance={user?.points}/>
 
             <div className="task-block">
-                <div className="task">
-                    {renderTaskBlock()}
-                </div>
+                {renderTaskBlock()}
                 <button className="btn-check-answer" onClick={checkAnswer}>
-                Проверить
-            </button>
+                    Проверить
+                </button>
             </div>
         </>
-
     );
-}
+};
 
 export default Play;
