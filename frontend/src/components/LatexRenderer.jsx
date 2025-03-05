@@ -14,7 +14,7 @@ const LatexRenderer = ({ expression }) => {
         }
     }, [expression]);
 
-    return <div ref={containerRef} />;
+    return <div className={"katex-container"} ref={containerRef} />;
 };
 
 export default LatexRenderer;

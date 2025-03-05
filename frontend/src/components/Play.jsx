@@ -4,6 +4,7 @@ import TaskBlock from "./TaskBlock";
 import CheckAnswerButton from "./CheckAnswerButton.jsx";
 import {useApiUser} from "../hooks/useApiUser";
 import {useTask} from "../hooks/useTask";
+import ProgressBar from "./ProgressBar.jsx";
 
 const HAPTIC_FEEDBACK_TYPE = "light";
 
@@ -15,10 +16,12 @@ const Play = () => {
     const {task, loading: taskLoading, error: taskError, fetchTask} = useTask();
     const inputRef = useRef(null);
     const spanRef = useRef(null);
+    const progressBarRef = useRef(null);
 
 
     const updateInputWidth = () => {
-        if (inputRef.current && spanRef.current) {
+        if (inputRef.current &&
+            spanRef.current) {
             inputRef.current.style.width = `${spanRef.current.offsetWidth}px`;
         }
     };
@@ -48,14 +51,14 @@ const Play = () => {
 
         const isCorrect = parseInt(answer) === task.answers[0];
         setResult(isCorrect);
-
         if (isCorrect) {
             window.Telegram.WebApp.HapticFeedback.impactOccurred(HAPTIC_FEEDBACK_TYPE);
+            progressBarRef.current.fillProgressBar();
             setTimeout(() => {
-                fetchTask();
                 setAnswer("");
                 inputRef.current.focus();
                 setResult(null);
+                fetchTask();
             }, 1000);
         }
     };
@@ -72,6 +75,8 @@ const Play = () => {
         <>
             <div className="decor-border"></div>
             <BalancePanel balance={user?.points}/>
+
+            <ProgressBar ref={progressBarRef}/>
 
             <div className="task-block">
                 <TaskBlock

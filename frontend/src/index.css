@@ -7,6 +7,29 @@
     --tg-theme-border-color: color-mix(in srgb, var(--tg-theme-bg-color), black 10%);
 }
 
+@font-face {
+    font-family: 'Benzin-Bold';
+    src: url('./fonts/benzin/Benzin-Bold.woff2') format('woff2'),
+    url('./fonts/benzin/Benzin-Bold.ttf') format('ttf');
+}
+
+@font-face {
+    font-family: 'Benzin-Medium';
+    src: url('./fonts/benzin/Benzin-Medium.woff2') format('woff2'),
+    url('./fonts/benzin/Benzin-Medium.ttf') format('ttf');
+}
+
+@font-face {
+    font-family: 'Benzin-Regular';
+    src: url('./fonts/benzin/Benzin-Regular.woff2') format('woff2'),
+    url('./fonts/benzin/Benzin-Regular.ttf') format('ttf');
+}
+
+@font-face {
+    font-family: 'SF Pro Display', sans-serif;
+    src: url('./fonts/SF/SF-Pro-Display-Regular.otf') format('otf')
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -85,9 +108,11 @@ body {
     color: #ffffff;
     border: none;
 }
+
 .navigation-link:hover {
     background: rgba(255, 255, 255, 0.1);
 }
+
 .info {
     margin-left: auto;
 }
@@ -112,6 +137,7 @@ body {
     box-shadow: none;
     background: #000000;
 }
+
 .answer-span {
     visibility: hidden;
     white-space: pre;
@@ -119,6 +145,7 @@ body {
     font-family: Benzin-Bold, sans-serif;
     position: absolute;
 }
+
 .BalancePanel {
     display: flex;
     align-items: center;
@@ -156,6 +183,7 @@ body {
 .username {
     font-family: 'SF Pro Display', sans-serif;
 }
+
 .btn-check-answer {
     background: linear-gradient(270deg, #7B00FF 0%, #140099 100%);
     color: white;
@@ -165,6 +193,7 @@ body {
     border-radius: 40px;
     margin-top: 20px;
 }
+
 .btn-check-answer:hover {
     background: linear-gradient(270deg, #7B00FF 0%, #140099 50%);
 }
@@ -176,6 +205,7 @@ body {
     flex-direction: column;
     justify-content: center;
 }
+
 .task {
     display: flex;
     align-items: center;
@@ -198,44 +228,49 @@ body {
     flex-direction: column;
     justify-content: center;
 }
+
 .nav-title {
     font-family: 'Benzin-Bold', sans-serif;
     font-size: 6px;
     margin-top: 5px;
 }
+
 .nav-icon {
     width: 60%;
 }
+
 .katex {
     font-family: 'Benzin-Bold', sans-serif;
     font-size: 24px;
-    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 .mx-1 {
     margin-left: 5px;
     margin-right: 5px;
     margin-top: 3px;
 }
 
-@font-face {
-    font-family: 'Benzin-Bold';
-    src: url('./fonts/benzin/Benzin-Bold.woff2') format('woff2'),
-    url('./fonts/benzin/Benzin-Bold.ttf') format('ttf');
+.progress-bar {
+    width: 100%;
+    margin-top: 23px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-@font-face {
-    font-family: 'Benzin-Medium';
-    src: url('./fonts/benzin/Benzin-Medium.woff2') format('woff2'),
-    url('./fonts/benzin/Benzin-Medium.ttf') format('ttf');
+.progress-body {
+    width: 80%;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-@font-face {
-    font-family: 'Benzin-Regular';
-    src: url('./fonts/benzin/Benzin-Regular.woff2') format('woff2'),
-    url('./fonts/benzin/Benzin-Regular.ttf') format('ttf');
-}
-
-@font-face {
-    font-family: 'SF Pro Display', sans-serif;
-    src: url('./fonts/SF/SF-Pro-Display-Regular.otf') format('otf')
+.katex-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
