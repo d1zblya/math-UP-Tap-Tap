@@ -1,33 +1,41 @@
-import React, {useRef, useState} from 'react';
-import BalancePanel from './BalancePanel';
-import LatexRenderer from './LatexRenderer';
-import {useApiUser} from '../hooks/useApiUser';
-import {useTask} from '../hooks/useTask';
+import React, {useEffect, useRef, useState} from "react";
+import BalancePanel from "./BalancePanel";
+import TaskBlock from "./TaskBlock";
+import CheckAnswerButton from "./CheckAnswerButton.jsx";
+import {useApiUser} from "../hooks/useApiUser";
+import {useTask} from "../hooks/useTask";
 
-const HAPTIC_FEEDBACK_TYPE = 'light';
-const RESULT_STYLES = {
-    true: {boxShadow: '0 0 25px #20BB54', border: '1px solid #20BB54'},
-    false: {boxShadow: '0 0 25px #D92923', border: '1px solid #D92923'},
-    null: {},
-};
-const TASK_BLOCK_STYLES = {
-    true: {display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'},
-    false: {display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between'},
-    null: {},
-};
+const HAPTIC_FEEDBACK_TYPE = "light";
+
 
 const Play = () => {
-    const [answer, setAnswer] = useState('');
+    const [answer, setAnswer] = useState("");
     const [result, setResult] = useState(null);
     const {user, loading: userLoading, error: userError} = useApiUser();
     const {task, loading: taskLoading, error: taskError, fetchTask} = useTask();
     const inputRef = useRef(null);
+    const spanRef = useRef(null);
 
-    const isExample = task?.type === 'SimpleExample';
 
+    const updateInputWidth = () => {
+        if (inputRef.current && spanRef.current) {
+            inputRef.current.style.width = `${spanRef.current.offsetWidth}px`;
+        }
+    };
+
+    useEffect(() => {
+        updateInputWidth();
+    }, [answer]);
+
+    const handleAnswerChange = (e) => {
+        const value = e.target.value;
+        if (/^\d*$/.test(value)) {
+            setAnswer(value);
+        }
+    };
 
     const handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
+        if (event.key === "Enter") {
             checkAnswer();
         }
     };
@@ -45,8 +53,9 @@ const Play = () => {
             window.Telegram.WebApp.HapticFeedback.impactOccurred(HAPTIC_FEEDBACK_TYPE);
             setTimeout(() => {
                 fetchTask();
-                setAnswer('');
+                setAnswer("");
                 inputRef.current.focus();
+                setResult(null);
             }, 1000);
         }
     };
@@ -59,39 +68,22 @@ const Play = () => {
         return <div>Error: {userError?.message || taskError?.message}</div>;
     }
 
-
-    const renderTaskBlock = () => {
-        const taskStyle = RESULT_STYLES[result] || {};
-        const taskBlockStyle = TASK_BLOCK_STYLES[isExample] || {};
-
-        return (
-            <div className="task" style={{...taskStyle, transition: 'box-shadow border 1s ease-in-out'}}>
-                <div style={{...taskBlockStyle}}>
-                    <LatexRenderer expression={task.expression_latex}/>
-                    {isExample && <div className={"katex mx-1"}>=</div>}
-                    <input
-                        className="answer"
-                        value={answer}
-                        onChange={(e) => setAnswer(e.target.value)}
-                        onKeyDown={handleKeyPress}
-                        ref={inputRef}
-                        autoFocus
-                    />
-                </div>
-            </div>
-        );
-    };
-
     return (
         <>
             <div className="decor-border"></div>
             <BalancePanel balance={user?.points}/>
 
             <div className="task-block">
-                {renderTaskBlock()}
-                <button className="btn-check-answer" onClick={checkAnswer}>
-                    Проверить
-                </button>
+                <TaskBlock
+                    task={task}
+                    answer={answer}
+                    result={result}
+                    onAnswerChange={handleAnswerChange}
+                    onKeyPress={handleKeyPress}
+                    inputRef={inputRef}
+                    spanRef={spanRef}
+                />
+                <CheckAnswerButton onClick={checkAnswer}/>
             </div>
         </>
     );

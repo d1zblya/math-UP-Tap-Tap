@@ -8,7 +8,7 @@ export const useTask = () => {
 
     const fetchTask = async () => {
         try {
-            const response = await request('tasks/medium-examples', 'GET');
+            const response = await request('tasks/simple-examples', 'GET');
             setTask(response);
         } catch (err) {
             setError(err);

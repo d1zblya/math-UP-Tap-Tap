@@ -94,6 +94,7 @@ body {
 
 
 .answer {
+    min-width: 45px;
     width: 45px;
     height: 40px;
     border-radius: 5px;
@@ -102,9 +103,8 @@ body {
     color: #ffffff;
     font-family: "Benzin-Bold", sans-serif;
     border: 2px solid #B3B3B3;
-    margin-left: 10px;
-    margin-bottom: 2px;
     background: rgba(255, 255, 255, 0.1);
+    margin-top: 10px;
 }
 
 .answer:focus {
@@ -112,7 +112,13 @@ body {
     box-shadow: none;
     background: #000000;
 }
-
+.answer-span {
+    visibility: hidden;
+    white-space: pre;
+    font-size: 30px;
+    font-family: Benzin-Bold, sans-serif;
+    position: absolute;
+}
 .BalancePanel {
     display: flex;
     align-items: center;
@@ -202,7 +208,8 @@ body {
 }
 .katex {
     font-family: 'Benzin-Bold', sans-serif;
-    font-size: 18px;
+    font-size: 24px;
+    width: 100%;
 }
 .mx-1 {
     margin-left: 5px;
