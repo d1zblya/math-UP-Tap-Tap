@@ -4,7 +4,7 @@ import {useTelegram} from './hooks/useTelegram';
 import UserPanel from './components/UserPanel';
 import Play from './components/Play.jsx';
 import Navigation from './components/Navigation';
-import Quests from './components/Quests';
+import QuestsPage from './components/QuestsPage';
 import Theory from './components/Theory';
 import Statistics from './components/Statistics';
 import Equations from './components/Equations';
@@ -41,7 +41,7 @@ const App = () => {
                 <Routes>
                     <Route index element={<Play/>}/>
                     <Route path="equations" element={<Equations/>}/>
-                    <Route path="quests" element={<Quests/>}/>
+                    <Route path="quests" element={<QuestsPage/>}/>
                     <Route path="theory" element={<Theory/>}/>
                     <Route path="statistics" element={<Statistics/>}/>
                 </Routes>

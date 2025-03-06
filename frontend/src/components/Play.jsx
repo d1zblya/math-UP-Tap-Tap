@@ -72,7 +72,7 @@ const Play = () => {
     }
 
     return (
-        <>
+        <div className={"PlayPage"}>
             <div className="decor-border"></div>
             <BalancePanel balance={user?.points}/>
 
@@ -90,7 +90,7 @@ const Play = () => {
                 />
                 <CheckAnswerButton onClick={checkAnswer}/>
             </div>
-        </>
+        </div>
     );
 };
 

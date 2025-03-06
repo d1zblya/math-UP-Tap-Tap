@@ -52,9 +52,8 @@ body {
 .top-panel {
     background: var(--main-bg-color);
     color: var(--main-text-color);
-    padding-bottom: 20px;
     text-align: center;
-    height: 90px;
+    height: 70px;
 
 }
 
@@ -151,7 +150,7 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 90px;
+    height: 75px;
     border-top: solid 1px var(--main-border-color);
     border-bottom: solid 1px var(--main-border-color);
 }
@@ -221,7 +220,9 @@ body {
     border: 1px solid #ffffff;
     height: 150px;
 }
-
+.PlayPage {
+    margin-top: 20px;
+}
 .example-block {
     display: flex;
     align-items: center;
@@ -255,7 +256,7 @@ body {
 
 .progress-bar {
     width: 100%;
-    margin-top: 23px;
+    margin-top: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -273,4 +274,49 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.DailyBlock {
+    width: 100%;
+}
+.daily-quests {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: stretch;
+}
+
+.DailyQuest {
+    background: rgba(217, 217, 217, 1);
+    color: rgba(0, 0, 0, 1);
+    border-radius: 15px;
+    min-height: 100px;
+    padding: 8px;
+    margin: 0 8px 8px 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.daily-quest-title {
+    font-family: 'Benzin-Bold', sans-serif;
+    font-size: 10px;
+    margin-top: 2px;
+}
+.daily-quest-info {
+    font-size: 8px;
+    font-family: 'Benzin-Medium', sans-serif;
+}
+.daily-quest-reward {
+    font-size: 9px;
+    font-family: 'Benzin-Bold', sans-serif;
+    align-self: flex-end;
+
+}
+.m-1 {
+    margin: 8px 8px 8px 8px;
+}
+
+.QuestsPage {
+    margin: 6px 6px;
+    border: 1px solid rgba(176, 176, 176, 1)
 }
