@@ -1,0 +1,14 @@
+.QuestNavigationLink {
+    font-size: 10px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    background: #0D0D0D;
+    font-family: "Benzin-Medium", sans-serif;
+}
+
+.QuestNavigationLink:hover {
+    background: #1E1E1E;
+}

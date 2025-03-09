@@ -1,0 +1,12 @@
+.QuestsNavigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    border-radius: 30px;
+    margin-top: 8px;
+    padding: 4px;
+    border: 1px solid #B0B0B0;
+    gap: 2px;
+    width: 85%;
+    height: 49px;
+}
