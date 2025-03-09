@@ -1,5 +1,6 @@
 import React from "react";
-import DailyQuest from "./DailyQuest.jsx";
+import DailyQuest from "../DailyQuest/DailyQuest.jsx";
+import "./DailyBlock.css"
 
 var _this = this;
 const DailyBlock = () => {

@@ -15,7 +15,7 @@ class TheoryService:
         async with async_session_maker() as session:
             theory = await TheoryDAO.find_one_or_none(session, *filter, **filter_by)
         if theory is None:
-            msg = "Theory not found"
+            msg = "TheoryPage not found"
             logger.error(msg)
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,

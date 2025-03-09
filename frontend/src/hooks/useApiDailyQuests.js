@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { request } from '../api/requests';
+import {useEffect, useState} from 'react';
+import {request} from '../api/requests';
 
 export const useApiDailyQuests = () => {
     const [loading, setLoading] = useState(false);
@@ -22,5 +22,5 @@ export const useApiDailyQuests = () => {
         fetchDailyQuests();
     }, []);
 
-    return { dailyQuests, loading, error, fetchDailyQuests};
+    return {dailyQuests, loading, error, fetchDailyQuests};
 };

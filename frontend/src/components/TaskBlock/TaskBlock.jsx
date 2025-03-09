@@ -1,5 +1,6 @@
 import React from "react";
-import LatexRenderer from "./LatexRenderer";
+import LatexRenderer from "../LatexRenderer/LatexRenderer.jsx";
+import "./TaskBlock.css"
 
 const TaskBlock = ({task, answer, result, onAnswerChange, onKeyPress, inputRef, spanRef}) => {
     const taskStyle = {
@@ -27,7 +28,6 @@ const TaskBlock = ({task, answer, result, onAnswerChange, onKeyPress, inputRef, 
         </div>
     );
 };
-
 
 
 export default TaskBlock;

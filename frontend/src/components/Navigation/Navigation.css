@@ -1,0 +1,38 @@
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    gap: 12px;
+}
+
+.navigation-link {
+    width: 20%;
+    height: 100%;
+    margin: 0 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-decoration: none;
+    border-radius: 15px;
+    background: #000000;
+    color: #ffffff;
+    border: none;
+}
+
+.navigation-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-title {
+    font-family: 'Benzin-Bold', sans-serif;
+    font-size: 6px;
+    margin-top: 5px;
+}
+
+.nav-icon {
+    width: 60%;
+}

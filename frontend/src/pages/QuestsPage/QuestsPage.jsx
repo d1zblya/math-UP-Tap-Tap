@@ -1,4 +1,5 @@
-import DailyBlock from "./DailyBlock.jsx";
+import DailyBlock from "../../components/DailyBlock/DailyBlock.jsx";
+import "./QuestsPage.css"
 
 const QuestsPage = () => {
     return (

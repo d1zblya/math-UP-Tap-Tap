@@ -1,4 +1,6 @@
-const DailyQuest = ( {quest} ) => {
+import "./DailyQuest.css"
+
+const DailyQuest = ({quest}) => {
     return (
         <div className="DailyQuest">
             <div className="daily-quest-title">

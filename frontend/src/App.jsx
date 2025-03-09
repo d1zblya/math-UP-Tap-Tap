@@ -1,13 +1,13 @@
 import {useEffect, useState} from 'react';
 import {Route, Routes} from 'react-router-dom';
 import {useTelegram} from './hooks/useTelegram';
-import UserPanel from './components/UserPanel';
-import Play from './components/Play.jsx';
-import Navigation from './components/Navigation';
-import QuestsPage from './components/QuestsPage';
-import Theory from './components/Theory';
-import Statistics from './components/Statistics';
-import Equations from './components/Equations';
+import UserPanel from './components/UserPanel/UserPanel.jsx';
+import PlayPage from './pages/PlayPage/PlayPage.jsx';
+import Navigation from './components/Navigation/Navigation.jsx';
+import QuestsPage from './pages/QuestsPage/QuestsPage.jsx';
+import TheoryPage from './pages/TheoryPage/TheoryPage.jsx';
+import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
+import LevelsPage from "./pages/LevelsPage/LevelsPage.jsx";
 
 
 const useUserData = () => {
@@ -39,11 +39,11 @@ const App = () => {
             </header>
             <main className="content">
                 <Routes>
-                    <Route index element={<Play/>}/>
-                    <Route path="equations" element={<Equations/>}/>
+                    <Route index element={<PlayPage/>}/>
+                    <Route path="levels" element={<LevelsPage/>}/>
                     <Route path="quests" element={<QuestsPage/>}/>
-                    <Route path="theory" element={<Theory/>}/>
-                    <Route path="statistics" element={<Statistics/>}/>
+                    <Route path="theory" element={<TheoryPage/>}/>
+                    <Route path="profile" element={<ProfilePage/>}/>
                 </Routes>
             </main>
             <footer className="navigation">

@@ -28,4 +28,4 @@ async function request(endpoint, method = "GET", data = {}) {
     }
 }
 
-export { request };
+export {request};

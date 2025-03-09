@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { request } from '../api/requests';
+import {useEffect, useState} from 'react';
+import {request} from '../api/requests';
 
 export const useTask = () => {
     const [task, setTask] = useState(null);
@@ -21,5 +21,5 @@ export const useTask = () => {
         fetchTask();
     }, []);
 
-    return { task, loading, error, fetchTask };
+    return {task, loading, error, fetchTask};
 };

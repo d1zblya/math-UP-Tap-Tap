@@ -1,8 +1,9 @@
 import React from "react";
 import katex from "katex";
+import "./LatexRenderer.css"
 
 
-const LatexRenderer = ({ expression }) => {
+const LatexRenderer = ({expression}) => {
     const containerRef = React.useRef(null);
 
     React.useEffect(() => {
@@ -14,7 +15,7 @@ const LatexRenderer = ({ expression }) => {
         }
     }, [expression]);
 
-    return <div className={"katex-container"} ref={containerRef} />;
+    return <div className={"katex-container"} ref={containerRef}/>;
 };
 
 export default LatexRenderer;

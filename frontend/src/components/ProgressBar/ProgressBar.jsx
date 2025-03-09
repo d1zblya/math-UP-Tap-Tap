@@ -1,6 +1,7 @@
 import {forwardRef, useImperativeHandle, useState} from "react";
+import "./ProgressBar.css"
 
-const ProgressBar = forwardRef(({ targetProgress = 100 }, ref) => {
+const ProgressBar = forwardRef(({targetProgress = 100}, ref) => {
     const [progress, setProgress] = useState(0);
 
     const fillProgressBar = () => {

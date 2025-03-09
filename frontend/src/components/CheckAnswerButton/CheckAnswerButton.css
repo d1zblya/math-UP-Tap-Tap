@@ -1,0 +1,13 @@
+.btn-check-answer {
+    background: linear-gradient(270deg, #7B00FF 0%, #140099 100%);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 13px 30px 11px 30px;
+    border-radius: 40px;
+    margin-top: 20px;
+}
+
+.btn-check-answer:hover {
+    background: linear-gradient(270deg, #7B00FF 0%, #140099 50%);
+}

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { request } from '../api/requests';
+import {useEffect, useState} from 'react';
+import {request} from '../api/requests';
 
 export const useApiUser = () => {
     const [user, setUser] = useState(null);
@@ -21,5 +21,5 @@ export const useApiUser = () => {
         fetchData();
     }, []);
 
-    return { user, loading, error };
+    return {user, loading, error};
 };

@@ -1,15 +1,16 @@
 import React, {useEffect, useRef, useState} from "react";
-import BalancePanel from "./BalancePanel";
-import TaskBlock from "./TaskBlock";
-import CheckAnswerButton from "./CheckAnswerButton.jsx";
-import {useApiUser} from "../hooks/useApiUser";
-import {useTask} from "../hooks/useTask";
-import ProgressBar from "./ProgressBar.jsx";
+import BalancePanel from "../../components/BalancePanel/BalancePanel.jsx";
+import TaskBlock from "../../components/TaskBlock/TaskBlock.jsx";
+import CheckAnswerButton from "../../components/CheckAnswerButton/CheckAnswerButton.jsx";
+import {useApiUser} from "../../hooks/useApiUser.js";
+import {useTask} from "../../hooks/useTask.js";
+import ProgressBar from "../../components/ProgressBar/ProgressBar.jsx";
+import "./PlayPage.css"
 
 const HAPTIC_FEEDBACK_TYPE = "light";
 
 
-const Play = () => {
+const PlayPage = () => {
     const [answer, setAnswer] = useState("");
     const [result, setResult] = useState(null);
     const {user, loading: userLoading, error: userError} = useApiUser();
@@ -94,4 +95,4 @@ const Play = () => {
     );
 };
 
-export default Play;
+export default PlayPage;
