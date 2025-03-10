@@ -4,15 +4,19 @@ import "./QuestsNavigations.css"
 
 const NAVIGATION_LINKS = [
     {title: "Математика", link: "mathQuests"},
-    {title: "Подписки", link: "dailyQuests"},
-    {title: "Активность", link: "dailyQuests"},
+    {title: "Подписки", link: "subscriptionsQuests"},
+    {title: "Активность", link: "activityQuests"},
 ];
 
-const QuestsNavigation = () => {
+const QuestsNavigation = ({activeTab, setActiveTab}) => {
     return (
         <div className="QuestsNavigation">
             {Array.prototype.map.call(NAVIGATION_LINKS, function (item) {
-                return <QuestNavigationLink title={item.title} link={item.link}/>
+                if (item.title === activeTab) {
+                    return <QuestNavigationLink title={item.title} state={"active"} setActiveTab={setActiveTab}/>
+                } else {
+                    return <QuestNavigationLink title={item.title} state={"inactive"} setActiveTab={setActiveTab}/>
+                }
             })}
         </div>
     )
