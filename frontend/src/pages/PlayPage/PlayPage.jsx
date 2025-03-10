@@ -44,6 +44,10 @@ const PlayPage = () => {
         }
     };
 
+    const handleComplete = () => {
+        console.log("УРА УРА ПОБЕДА")
+    }
+
     const checkAnswer = () => {
         if (!answer || !task) {
             setResult(null);
@@ -76,9 +80,7 @@ const PlayPage = () => {
         <div className={"PlayPage"}>
             <div className="decor-border"></div>
             <BalancePanel balance={user?.points}/>
-
-            <ProgressBar ref={progressBarRef}/>
-
+            <ProgressBar ref={progressBarRef} onComplete={handleComplete}/>
             <div className="task-block">
                 <TaskBlock
                     task={task}
