@@ -1,11 +1,11 @@
-.SubscriptionQuest {
+.Quest {
     background: #0D0D0D;
     border-radius: 30px;
-    height: 100px;
+    height: 95px;
     display: flex;
     flex-direction: row;
     width: 95%;
-    margin-top: 20px;
+    margin-top: 15px;
     align-items: center;
     padding-right: 20px;
     padding-left: 10px;
@@ -16,7 +16,7 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    margin-right: 20px;
+    margin-right: 15px;
     margin-left: 5px;
 }
 

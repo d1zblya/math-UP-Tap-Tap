@@ -1,16 +1,18 @@
+import "./Quest.css"
 import ProceedButton from "../ProceedButton/ProceedButton.jsx";
-import "./SubsctiptionQuest.css"
 
-const SubscriptionQuest = ({quest}) => {
+const Quest = ({quest, type}) => {
     return (
-        <div className={"SubscriptionQuest"}>
+        <div className={"Quest"}>
             <img className={"quest-img"} src={quest.img} alt=""/>
             <div className="quest-text-block">
                 <span className={"quest-text"}>{quest.text}</span>
                 <span className={"quest-reward"}>+{quest.reward}Mp</span>
             </div>
-            <ProceedButton link={quest.link}/>
+            {type === "subscription" && (
+                <ProceedButton link={quest.link}/>
+            )}
         </div>
     )
 }
-export default SubscriptionQuest
+export default Quest

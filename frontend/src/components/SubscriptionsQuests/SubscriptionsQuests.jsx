@@ -1,6 +1,6 @@
 import "./SubscriptionsQuests.css"
 import React from "react";
-import SubscriptionQuest from "../SubscriptionQuest/SubscriptionQuest.jsx";
+import Quest from "../Quest/Quest.jsx";
 
 const quests = [{
     text: "Подпишитесь на канал MathUP в Telegram",
@@ -14,7 +14,7 @@ const SubscriptionsQuests = () => {
     return (
         <div className={"SubscriptionsQuests"}>
             {Array.prototype.map.call(quests, function (quest) {
-                return <SubscriptionQuest quest={quest}/>
+                return <Quest quest={quest} type={"subscription"}/>
             }, _this)}
         </div>
     )
