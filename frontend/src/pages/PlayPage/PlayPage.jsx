@@ -1,10 +1,10 @@
 import React, {useEffect, useRef, useState} from "react";
-import BalancePanel from "../../components/BalancePanel/BalancePanel.jsx";
-import TaskBlock from "../../components/TaskBlock/TaskBlock.jsx";
-import CheckAnswerButton from "../../components/CheckAnswerButton/CheckAnswerButton.jsx";
+import BalancePanel from "../../components/play/BalancePanel/BalancePanel.jsx";
+import TaskBlock from "../../components/play/TaskBlock/TaskBlock.jsx";
+import CheckAnswerButton from "../../components/play/CheckAnswerButton/CheckAnswerButton.jsx";
 import {useApiUser} from "../../hooks/useApiUser.js";
 import {useTask} from "../../hooks/useTask.js";
-import ProgressBar from "../../components/ProgressBar/ProgressBar.jsx";
+import ProgressBar from "../../components/play/ProgressBar/ProgressBar.jsx";
 import "./PlayPage.css"
 
 const HAPTIC_FEEDBACK_TYPE = "light";

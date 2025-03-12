@@ -65,6 +65,9 @@ body {
     height: 90px;
     border-top: 1px solid #B0B0B0;
     margin-bottom: 10px;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
 }
 
 

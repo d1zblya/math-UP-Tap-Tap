@@ -17,6 +17,7 @@ export const useApiMathQuests = () => {
             setLoading(false);
         }
     };
+    w
 
     useEffect(() => {
         fetchMathQuests();

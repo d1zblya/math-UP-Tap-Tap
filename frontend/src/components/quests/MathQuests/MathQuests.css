@@ -4,4 +4,6 @@
     align-items: center;
     justify-content: center;
     min-width: 95%;
+    height: 100%;
+    overflow: hidden;
 }

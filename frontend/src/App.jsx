@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react';
 import {Route, Routes} from 'react-router-dom';
 import {useTelegram} from './hooks/useTelegram';
-import UserPanel from './components/UserPanel/UserPanel.jsx';
+import UserPanel from './components/layout/UserPanel/UserPanel.jsx';
 import PlayPage from './pages/PlayPage/PlayPage.jsx';
-import Navigation from './components/Navigation/Navigation.jsx';
+import Navigation from './components/layout/Navigation/Navigation.jsx';
 import QuestsPage from './pages/QuestsPage/QuestsPage.jsx';
 import TheoryPage from './pages/TheoryPage/TheoryPage.jsx';
 import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
