@@ -18,6 +18,8 @@ async function request(endpoint, method = "GET", data = {}) {
 
         if (response.status === 200) {
             return response.data;
+        } else if (response.status === 401 || response.status === 500) {
+            TG.close()
         } else {
             throw new Error(`Ошибка: ${response.status} - ${response.data.message || "Неизвестная ошибка"}`);
         }

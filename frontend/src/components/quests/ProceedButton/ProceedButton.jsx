@@ -1,8 +1,9 @@
 import "./ProceedButton.css"
 
 const ProceedButton = ({link}) => {
+    const TG = window.Telegram.WebApp;
     const handleClick = () => {
-        window.location.href = link;
+        TG.openTelegramLink(link)
     };
 
     return (
