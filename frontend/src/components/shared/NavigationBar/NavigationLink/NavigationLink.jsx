@@ -1,10 +1,10 @@
-import "./QuestNavigationLink.css"
+import "./NavigationLink.css"
 import React from "react";
 
-const QuestNavigationLink = ({title, state, setActiveTab}) => {
+const NavigationLink = ({title, state, setActiveTab}) => {
     return (
         <button
-            className='QuestNavigationLink'
+            className='NavigationLink'
             onClick={() => setActiveTab(title)}
             style={{
                 backgroundColor: state === "active" ? "#1E1E1E" : "#0D0D0D",
@@ -13,4 +13,4 @@ const QuestNavigationLink = ({title, state, setActiveTab}) => {
         </button>
     )
 }
-export default QuestNavigationLink
+export default NavigationLink

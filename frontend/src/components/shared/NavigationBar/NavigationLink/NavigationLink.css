@@ -1,4 +1,4 @@
-.QuestNavigationLink {
+.NavigationLink {
     font-size: 9px;
     border-radius: 30px;
     display: flex;
@@ -14,6 +14,6 @@
     padding-top: 1px;
 }
 
-.QuestNavigationLink:hover {
+.NavigationLink:hover {
     background: #1E1E1E;
 }
