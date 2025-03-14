@@ -13,4 +13,4 @@ const NavigationLink = ({title, state, setActiveTab}) => {
         </button>
     )
 }
-export default NavigationLink
+export default NavigationLink;

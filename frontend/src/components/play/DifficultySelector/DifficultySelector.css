@@ -16,8 +16,11 @@
     color: white;
     font-size: 18px;
     font-family: "Benzin-Bold", sans-serif;
+
 }
 
 .dif-heading {
     text-decoration: underline;
+    font-family: "Benzin-Bold", sans-serif;
+    font-size: 22px;
 }

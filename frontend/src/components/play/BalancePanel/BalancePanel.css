@@ -4,8 +4,7 @@
     justify-content: center;
     flex-direction: column;
     height: 75px;
-    border-top: solid 1px var(--main-border-color);
-    border-bottom: solid 1px var(--main-border-color);
+    border-bottom: solid 1px rgba(176, 176, 176, 1);
 }
 
 .balance {
@@ -18,6 +17,16 @@
     font-weight: 300;
     font-size: 13px;
     color: #B3B3B3;
-    top: 100px;
+    top: 80px;
     position: absolute;
+}
+
+.decor-border {
+    height: 95px;
+    width: 88vw;
+    border-left: 1px solid rgba(176, 176, 176, 1);
+    border-right: 1px solid rgba(176, 176, 176, 1);
+    position: absolute;
+    left: 6vw;
+    top: 70px;
 }
