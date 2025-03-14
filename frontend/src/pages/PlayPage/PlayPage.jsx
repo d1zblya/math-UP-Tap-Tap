@@ -6,19 +6,20 @@ import {useApiUser} from "../../hooks/useApiUser.js";
 import {useTask} from "../../hooks/useTask.js";
 import ProgressBar from "../../components/play/ProgressBar/ProgressBar.jsx";
 import "./PlayPage.css"
+import {useSearchParams} from "react-router-dom";
 
 const HAPTIC_FEEDBACK_TYPE = "light";
 
 
 const PlayPage = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
     const [answer, setAnswer] = useState("");
     const [result, setResult] = useState(null);
     const {user, loading: userLoading, error: userError} = useApiUser();
-    const {task, loading: taskLoading, error: taskError, fetchTask} = useTask();
+    const {task, loading: taskLoading, error: taskError, fetchTask} = useTask(searchParams.get("difficulty"));
     const inputRef = useRef(null);
     const spanRef = useRef(null);
     const progressBarRef = useRef(null);
-
 
     const updateInputWidth = () => {
         if (inputRef.current &&

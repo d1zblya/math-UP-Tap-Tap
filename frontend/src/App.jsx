@@ -8,6 +8,7 @@ import QuestsPage from './pages/QuestsPage/QuestsPage.jsx';
 import TheoryPage from './pages/TheoryPage/TheoryPage.jsx';
 import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
 import LevelsPage from "./pages/LevelsPage/LevelsPage.jsx";
+import DifficultySelector from "./components/play/DifficultySelector/DifficultySelector.jsx";
 
 
 const useUserData = () => {
@@ -39,7 +40,8 @@ const App = () => {
             </header>
             <main className="content">
                 <Routes>
-                    <Route index element={<PlayPage/>}/>
+                    <Route index element={<DifficultySelector/>}/>
+                    <Route path="play" element={<PlayPage/>}/>
                     <Route path="levels" element={<LevelsPage/>}/>
                     <Route path="quests" element={<QuestsPage/>}/>
                     <Route path="theory" element={<TheoryPage/>}/>
