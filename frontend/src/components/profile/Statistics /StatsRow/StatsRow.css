@@ -8,13 +8,11 @@
     border-top: 1px solid rgba(176, 176, 176, 1);
     height: 70px;
 }
-
 .stats-text {
     font-size: 14px;
     font-family: "Benzin-Medium", sans-serif;
     max-width: 70%;
 }
-
 .list-point {
     width: 11px;
     height: 11px;
