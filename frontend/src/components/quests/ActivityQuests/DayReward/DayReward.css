@@ -1,0 +1,23 @@
+.DayReward {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border: 1px solid #B0B0B0;
+    margin: 5px;
+    border-radius: 20px;
+    background: rgba(30, 30, 30, 1);
+}
+
+.reward {
+    font-size: 11px;
+    font-family: "Benzin-Bold", sans-serif;
+    margin-top: 7px;
+}
+
+.day-title {
+    font-size: 10px;
+    color: rgba(199, 199, 199, 1);
+}
