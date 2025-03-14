@@ -1,0 +1,21 @@
+.decor-border {
+    height: 95px;
+    width: 88vw;
+    border-left: 1px solid var(--main-border-color);
+    border-right: 1px solid var(--main-border-color);
+    position: absolute;
+    left: 6vw;
+    top: 90px;
+}
+
+.task-block {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.PlayPage {
+    margin-top: 20px;
+}

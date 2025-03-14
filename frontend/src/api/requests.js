@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const DEFAULT_URL = ""; // URL api
+const DEFAULT_URL = "https://mathup.ru/api"; // URL api
 
 async function request(endpoint, method = "GET", data = {}) {
     const TG = window.Telegram.WebApp;
@@ -17,7 +17,9 @@ async function request(endpoint, method = "GET", data = {}) {
 
 
         if (response.status === 200) {
-            return response.data.data;
+            return response.data;
+        } else if (response.status === 401 || response.status === 500) {
+            TG.close()
         } else {
             throw new Error(`Ошибка: ${response.status} - ${response.data.message || "Неизвестная ошибка"}`);
         }
@@ -28,4 +30,4 @@ async function request(endpoint, method = "GET", data = {}) {
     }
 }
 
-export { request };
+export {request};

@@ -1,0 +1,40 @@
+.Quest {
+    background: #0D0D0D;
+    border-radius: 30px;
+    height: 95px;
+    display: flex;
+    flex-direction: row;
+    width: 95%;
+    margin-top: 15px;
+    align-items: center;
+    padding-right: 20px;
+    padding-left: 10px;
+}
+
+.quest-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    margin-left: 5px;
+}
+
+.quest-text {
+    font-size: 10px;
+    font-family: "Benzin-Bold", sans-serif;
+
+}
+
+.quest-reward {
+    font-size: 11px;
+    font-family: "Benzin-Medium", sans-serif;
+}
+
+.quest-text-block {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding-right: 30px;
+}

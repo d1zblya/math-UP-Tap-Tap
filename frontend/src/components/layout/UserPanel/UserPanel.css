@@ -1,0 +1,16 @@
+.username {
+    font-family: 'SF Pro Display', sans-serif;
+}
+
+.UserPanel {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    padding: 20px 20px 30px 20px;
+}
+
+.info {
+    margin-left: auto;
+}

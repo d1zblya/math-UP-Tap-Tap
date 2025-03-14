@@ -1,0 +1,17 @@
+.ProceedButton {
+    border-radius: 13px;
+    background-color: #000000;
+    border: 1px solid #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    height: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: auto;
+}
+
+.ProceedButton:hover, .ProceedButton:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+}

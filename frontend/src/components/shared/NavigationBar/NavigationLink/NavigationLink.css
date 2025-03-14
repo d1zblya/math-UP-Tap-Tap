@@ -1,0 +1,19 @@
+.NavigationLink {
+    font-size: 9px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    background: #0D0D0D;
+    font-family: "Benzin-Medium", sans-serif;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    padding-top: 1px;
+}
+
+.NavigationLink:hover {
+    background: #1E1E1E;
+}

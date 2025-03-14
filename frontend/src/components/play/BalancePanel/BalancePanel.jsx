@@ -1,3 +1,5 @@
+import "./BalancePanel.css"
+
 function BalancePanel({balance}) {
     const formatter = new Intl.NumberFormat('en-US');
     const balanceView = formatter.format(balance);

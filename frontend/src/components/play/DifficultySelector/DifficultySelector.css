@@ -1,0 +1,23 @@
+.DifficultySelector {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.dif-btn {
+    height: 80px;
+    border-radius: 50px;
+    border: none;
+    padding: 0 20px;
+    width: 75%;
+    background: linear-gradient(88.81deg, #3300FF 1.02%, rgba(191, 0, 255, 0.64) 113.81%);
+    color: white;
+    font-size: 18px;
+    font-family: "Benzin-Bold", sans-serif;
+}
+
+.dif-heading {
+    text-decoration: underline;
+}

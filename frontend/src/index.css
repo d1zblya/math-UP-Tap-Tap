@@ -7,6 +7,29 @@
     --tg-theme-border-color: color-mix(in srgb, var(--tg-theme-bg-color), black 10%);
 }
 
+@font-face {
+    font-family: 'Benzin-Bold';
+    src: url('./fonts/benzin/Benzin-Bold.woff2') format('woff2'),
+    url('./fonts/benzin/Benzin-Bold.ttf') format('ttf');
+}
+
+@font-face {
+    font-family: 'Benzin-Medium';
+    src: url('./fonts/benzin/Benzin-Medium.woff2') format('woff2'),
+    url('./fonts/benzin/Benzin-Medium.ttf') format('ttf');
+}
+
+@font-face {
+    font-family: 'Benzin-Regular';
+    src: url('./fonts/benzin/Benzin-Regular.woff2') format('woff2'),
+    url('./fonts/benzin/Benzin-Regular.ttf') format('ttf');
+}
+
+@font-face {
+    font-family: 'SF Pro Display', sans-serif;
+    src: url('./fonts/SF/SF-Pro-Display-Regular.otf') format('otf')
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -29,28 +52,9 @@ body {
 .top-panel {
     background: var(--main-bg-color);
     color: var(--main-text-color);
-    padding-bottom: 20px;
     text-align: center;
-    height: 90px;
+    height: 70px;
 
-}
-
-.UserPanel {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 16px;
-    padding: 20px;
-    padding-top: 30px;
-}
-
-.content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
 }
 
 .navigation {
@@ -61,172 +65,26 @@ body {
     height: 90px;
     border-top: 1px solid #B0B0B0;
     margin-bottom: 10px;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
 }
 
-.nav {
+
+.content {
+    flex: 1;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    gap: 12px;
-}
-
-
-.navigation-link {
-    width: 20%;
-    height: 100%;
-    margin: 0 3px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-decoration: none;
-    border-radius: 15px;
-    background: #000000;
-    color: #ffffff;
-    border: none;
-}
-.navigation-link:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-.info {
-    margin-left: auto;
-}
-
-.Task {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    font-size: 30px;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    font-family: "Benzin-Bold", sans-serif;
-    border: 1px solid #ffffff;
-    height: 150px;
-}
-
-.answer {
-    width: 45px;
-    height: 40px;
-    border-radius: 5px;
-    font-size: 30px;
-    background: #000000;
-    color: #ffffff;
-    font-family: "Benzin-Bold", sans-serif;
-    border: 2px solid #B3B3B3;
-    margin-left: 10px;
-    margin-bottom: 2px;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.answer:focus {
-    border: 2px solid #ffffff;
-    box-shadow: none;
-    background: #000000;
-}
-
-.BalancePanel {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 80px;
-    margin-top: 20px;
-    border-top: solid 1px var(--main-border-color);
-    border-bottom: solid 1px var(--main-border-color);
-}
-
-.balance {
-    font-family: "Benzin-Bold", sans-serif;
-    font-size: 25px;
-    margin-top: 5px;
-}
-
-.balance-title {
-    font-weight: 300;
-    font-size: 13px;
-    color: #B3B3B3;
-    top: 96px;
-    position: absolute;
-}
-
-.decor-border {
-    height: 100px;
-    width: 88vw;
-    border-left: 1px solid var(--main-border-color);
-    border-right: 1px solid var(--main-border-color);
-    position: absolute;
-    left: 6vw;
-    top: 90px;
-}
-
-.username {
-    font-family: 'SF Pro Display', sans-serif;
-}
-
-.example {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-}
-
-.example-text {
-    font-family: 'Benzin-Bold', sans-serif;
-}
-
-.btn-check-answer {
-    background: linear-gradient(270deg, #7B00FF 0%, #140099 100%);
-    color: white;
-    border: none;
-    cursor: pointer;
-    padding: 13px 30px 11px 30px;
-    border-radius: 40px;
-    margin-top: 20px;
-}
-.btn-check-answer:hover {
-    background: linear-gradient(270deg, #7B00FF 0%, #140099 50%);
-}
-
-.task-block {
-    display: flex;
-    align-items: center;
     flex-direction: column;
 }
-.nav-title {
-    font-family: 'Benzin-Bold', sans-serif;
-    font-size: 6px;
-    margin-top: 5px;
-}
-.nav-icon {
-    width: 60%;
-}
 
 
-@font-face {
-    font-family: 'Benzin-Bold';
-    src: url('./fonts/benzin/Benzin-Bold.woff2') format('woff2'),
-    url('./fonts/benzin/Benzin-Bold.ttf') format('ttf');
+.mx-1 {
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 3px;
 }
 
-@font-face {
-    font-family: 'Benzin-Medium';
-    src: url('./fonts/benzin/Benzin-Medium.woff2') format('woff2'),
-    url('./fonts/benzin/Benzin-Medium.ttf') format('ttf');
-}
 
-@font-face {
-    font-family: 'Benzin-Regular';
-    src: url('./fonts/benzin/Benzin-Regular.woff2') format('woff2'),
-    url('./fonts/benzin/Benzin-Regular.ttf') format('ttf');
-}
-
-@font-face {
-    font-family: 'SF Pro Display', sans-serif;
-    src: url('./fonts/SF/SF-Pro-Display-Regular.otf') format('otf')
+.m-1 {
+    margin: 8px 8px 8px 8px;
 }

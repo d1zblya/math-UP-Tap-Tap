@@ -1,0 +1,10 @@
+.DailyBlock {
+    width: 100%;
+    border-bottom: 1px solid #B0B0B0
+}
+
+.daily-quests {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: stretch;
+}

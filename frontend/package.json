@@ -12,8 +12,10 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.0.6",
     "@telegram-apps/sdk": "^3.4.0",
+    "@twa-dev/sdk": "^8.0.2",
     "axios": "^1.7.9",
     "dos2unix": "^1.1.2",
+    "katex": "^0.16.21",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.5",

@@ -1,5 +1,6 @@
 import React from 'react';
-import Avatar from './Avatar.jsx';
+import Avatar from '../Avatar/Avatar.jsx';
+import "./UserPanel.css"
 
 function UserPanel({username, avatarUrl}) {
     return (

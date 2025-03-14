@@ -1,50 +1,51 @@
-import React, {useEffect, useState} from 'react'
-import UserPanel from './components/UserPanel.jsx';
-import Task from './components/Task.jsx';
-import Navigation from './components/Navigation.jsx';
-import {useTelegram} from "./hooks/useTelegram.js";
-import {Route, Routes} from "react-router-dom";
-import Quests from "./components/Quests.jsx";
-import Theory from "./components/Theory.jsx";
-import Statistics from "./components/Statistics.jsx";
-import Equations from "./components/Equations.jsx";
-import BalancePanel from "./components/BalancePanel.jsx";
-import {request} from "./api/requests.js";
+import {useEffect, useState} from 'react';
+import {Route, Routes} from 'react-router-dom';
+import {useTelegram} from './hooks/useTelegram';
+import UserPanel from './components/layout/UserPanel/UserPanel.jsx';
+import PlayPage from './pages/PlayPage/PlayPage.jsx';
+import Navigation from './components/layout/Navigation/Navigation.jsx';
+import QuestsPage from './pages/QuestsPage/QuestsPage.jsx';
+import TheoryPage from './pages/TheoryPage/TheoryPage.jsx';
+import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
+import LevelsPage from "./pages/LevelsPage/LevelsPage.jsx";
+import DifficultySelector from "./components/play/DifficultySelector/DifficultySelector.jsx";
 
-function App() {
+
+const useUserData = () => {
     const [username, setUsername] = useState('Guest');
-    const [avatarUrl, setAvatarUrl] = useState('https://fikiwiki.com/uploads/posts/2022-02/1644862081_1-fikiwiki-com-p-kuritsi-krasivie-kartinki-2.jpg'); // Заглушка для аватарки)
-
+    const [avatarUrl, setAvatarUrl] = useState(
+        'https://fikiwiki.com/uploads/posts/2022-02/1644862081_1-fikiwiki-com-p-kuritsi-krasivie-kartinki-2.jpg'
+    );
     const {tg} = useTelegram();
+
     useEffect(() => {
-        if (tg.initDataUnsafe.user) {
-            const user = tg.initDataUnsafe.user;
-            setUsername(user.first_name);
-            setAvatarUrl(user.photo_url);
+        if (tg.initDataUnsafe?.user) {
+            const {first_name, photo_url} = tg.initDataUnsafe.user;
+            setUsername(first_name);
+            setAvatarUrl(photo_url);
         }
-    }, []);
-    const [user, setUser] = useState(null)
-    useEffect(() => {
-        async function fetchData() {
-            const response = await request("users/me", "GET");
-            setUser(response);
-        }
-        fetchData();
-    }, [])
+    }, [tg]);
+
+    return {username, avatarUrl};
+};
+
+
+const App = () => {
+    const {username, avatarUrl} = useUserData();
+
     return (
         <div className="container">
             <header className="top-panel">
                 <UserPanel username={username} avatarUrl={avatarUrl}/>
-                <div className="decor-border"></div>
-                <BalancePanel balance={user}/>
             </header>
             <main className="content">
                 <Routes>
-                    <Route index element={<Task/>}/>
-                    <Route path={'equations'} element={<Equations/>}/>
-                    <Route path={"quests"} element={<Quests/>}/>
-                    <Route path={"theory"} element={<Theory/>}/>
-                    <Route path={"statistics"} element={<Statistics/>}/>
+                    <Route index element={<DifficultySelector/>}/>
+                    <Route path="play" element={<PlayPage/>}/>
+                    <Route path="levels" element={<LevelsPage/>}/>
+                    <Route path="quests" element={<QuestsPage/>}/>
+                    <Route path="theory" element={<TheoryPage/>}/>
+                    <Route path="profile" element={<ProfilePage/>}/>
                 </Routes>
             </main>
             <footer className="navigation">
@@ -52,7 +53,6 @@ function App() {
             </footer>
         </div>
     );
-}
+};
 
-
-export default App
+export default App;
