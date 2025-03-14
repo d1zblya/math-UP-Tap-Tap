@@ -1,17 +1,20 @@
 import json
 import time
 import base64
+from typing import Union
+
 import nacl.signing
 import nacl.encoding
 from urllib.parse import parse_qsl, unquote
 from fastapi import HTTPException, status
 from src.core.config import settings
 from nacl.exceptions import BadSignatureError
+from starlette.responses import JSONResponse
 
 from loguru import logger
 
 
-def verify_telegram_init_data(init_data: str) -> dict:
+def verify_telegram_init_data(init_data: str) -> Union[dict, JSONResponse]:
     """
     Проверяет корректность `initData` из Telegram.
     """
@@ -24,7 +27,15 @@ def verify_telegram_init_data(init_data: str) -> dict:
     if "signature" not in data_dict:
         msg = "Missing 'signature' in initData"
         logger.error(msg)
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=msg)
+        return JSONResponse(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    content={
+                        "error": {
+                            "message": msg,
+                            "code": status.HTTP_400_BAD_REQUEST,
+                        }
+                    }
+                )
 
     received_signature = data_dict.pop("signature")  # Забираем подпись
 
@@ -39,7 +50,15 @@ def verify_telegram_init_data(init_data: str) -> dict:
     except Exception:
         msg = "Invalid signature encoding"
         logger.error(msg)
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=msg)
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={
+                "error": {
+                    "message": msg,
+                    "code": status.HTTP_400_BAD_REQUEST,
+                }
+            }
+        )
 
     public_key_bytes = bytes.fromhex(settings.TELEGRAM_PUBLIC_KEY)
 
@@ -50,14 +69,30 @@ def verify_telegram_init_data(init_data: str) -> dict:
     except BadSignatureError:
         msg = "Invalid signature"
         logger.error(msg)
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=msg)
+        return JSONResponse(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            content={
+                "error": {
+                    "message": msg,
+                    "code": status.HTTP_400_BAD_REQUEST,
+                }
+            }
+        )
 
     # Проверяем, не устарели ли данные (разрешаем 24 часа)
     auth_date = int(data_dict.get("auth_date", 0))
-    if abs(auth_date - int(time.time())) > 60 * 60:
+    if abs(auth_date - int(time.time())) > settings.AUTH_DATE_EXPIRE:
         msg = "Expired initData"
         logger.error(msg)
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=msg)
+        return JSONResponse(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            content={
+                "error": {
+                    "message": msg,
+                    "code": status.HTTP_400_BAD_REQUEST,
+                }
+            }
+        )
 
     data_dict["user"] = json.loads(data_dict["user"])
 
