@@ -9,11 +9,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from src.database.session import Base
 
 ModelType = TypeVar("ModelType", bound=Base)
-CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
-UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
+SchemaType = TypeVar("SchemaType", bound=BaseModel)
 
 
-class BaseDAO(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
+class BaseDAO(Generic[ModelType, SchemaType]):
     model = None
 
     @classmethod
@@ -45,7 +44,7 @@ class BaseDAO(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     async def add(
             cls,
             session: AsyncSession,
-            obj_in: Union[CreateSchemaType, Dict[str, Any]]
+            obj_in: Union[SchemaType, Dict[str, Any]]
     ) -> Optional[ModelType]:
         if isinstance(obj_in, dict):
             create_data = obj_in
@@ -76,7 +75,7 @@ class BaseDAO(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             cls,
             session: AsyncSession,
             *where,
-            obj_in: Union[UpdateSchemaType, Dict[str, Any]],
+            obj_in: Union[SchemaType, Dict[str, Any]],
     ) -> Optional[ModelType]:
         if isinstance(obj_in, dict):
             update_data = obj_in
