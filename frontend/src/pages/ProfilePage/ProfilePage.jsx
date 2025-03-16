@@ -2,7 +2,7 @@ import "./ProfilePage.css"
 import BalancePanel from "../../components/shared/BalancePanel/BalancePanel.jsx";
 import React, {useState} from "react";
 import NavigationBar from "../../components/shared/NavigationBar/NavigationBar.jsx";
-import Statistics from "../../components/profile/Statistics /Statistics.jsx";
+import Statistics from "../../components/profile/Statistics/Statistics.jsx";
 import Leaders from "../../components/profile/Leaders/Leaders.jsx";
 import Friends from "../../components/profile/Friends/Friends.jsx";
 
