@@ -1,0 +1,9 @@
+.ProfilePage {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.NavigationBar {
+    margin-top: 20px;
+}

@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import BalancePanel from "../../components/play/BalancePanel/BalancePanel.jsx";
+import BalancePanel from "../../components/shared/BalancePanel/BalancePanel.jsx";
 import TaskBlock from "../../components/play/TaskBlock/TaskBlock.jsx";
 import CheckAnswerButton from "../../components/play/CheckAnswerButton/CheckAnswerButton.jsx";
 import {useApiUser} from "../../hooks/useApiUser.js";
@@ -79,7 +79,6 @@ const PlayPage = () => {
 
     return (
         <div className={"PlayPage"}>
-            <div className="decor-border"></div>
             <BalancePanel balance={user?.points}/>
             <ProgressBar ref={progressBarRef} onComplete={handleComplete}/>
             <div className="task-block">
