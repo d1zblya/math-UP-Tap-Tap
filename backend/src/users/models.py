@@ -12,6 +12,9 @@ class UserModel(Base):
     first_name = Column(String(100), nullable=False)
     points = Column(Integer, nullable=False, server_default="0")
     registration_date = Column(DateTime, server_default=func.now())
+    solved_examples = Column(Integer, nullable=False, server_default="0")
+    correctly_solved_examples = Column(Integer, nullable=False, server_default="0")
+    completed_quests = Column(Integer, nullable=False, server_default="0")
     bio = Column(String(256), default="Описание вашего профиля")
 
 

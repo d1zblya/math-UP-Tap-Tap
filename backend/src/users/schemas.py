@@ -6,6 +6,9 @@ from src.tasks.schemas import TaskComplexity
 class User(BaseModel):
     tg_id: int = Field(..., gt=0)
     first_name: str = Field(..., min_length=1, max_length=100)
+    solved_examples: int = Field(None, ge=0, description="Решенных примеров")
+    correctly_solved_examples: int = Field(None, ge=0, description="Правильно решенных примеров")
+    completed_quests: int = Field(None, ge=0, description="Завершенных квестов")
     points: int = Field(
         default=0,
         ge=0,
