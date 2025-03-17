@@ -65,8 +65,12 @@ class UserService:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=msg)
 
             if user_history.user_answer == user_history.true_answer:
+                user.correctly_solved_examples += 1
                 user.points += user_history.points
-                await session.commit()
+
+            user.solved_examples += 1
+
+            await session.commit()
 
             await UserHistoryDAO.add(session, user_history)
 
@@ -88,6 +92,7 @@ class UserService:
                 if user_quest.count_result >= quest.target:
                     user = await UserDAO.find_one_or_none(session, tg_id=tg_id)
                     user.points += quest.reward
+                    user.completed_quests += 1
                     user_quest.is_completed = True
 
                 await session.commit()
