@@ -7,6 +7,8 @@ import {useTask} from "../../hooks/useTask.js";
 import ProgressBar from "../../components/play/ProgressBar/ProgressBar.jsx";
 import "./PlayPage.css"
 import {useSearchParams} from "react-router-dom";
+import {request} from "../../api/requests.js";
+import {useTelegram} from "../../hooks/useTelegram.js";
 
 const HAPTIC_FEEDBACK_TYPE = "light";
 
@@ -20,6 +22,7 @@ const PlayPage = () => {
     const inputRef = useRef(null);
     const spanRef = useRef(null);
     const progressBarRef = useRef(null);
+    const TG = useTelegram();
 
     const updateInputWidth = () => {
         if (inputRef.current &&
@@ -49,6 +52,31 @@ const PlayPage = () => {
         console.log("УРА УРА ПОБЕДА")
     }
 
+    async function accruePoints(count) {
+        let tgId = TG.initDataUnsafe.user.id
+        let data = {
+            tg_id: tgId,
+            task_complexity: task.task_complexity,
+            task: task.expression_latex,
+            points: count,
+            true_answer: task.answers,
+            user_answer: answer,
+        }
+        await request(`${tgId}/history`, 'POST', data);
+    }
+
+    const successAnswer = () => {
+        TG.HapticFeedback.impactOccurred(HAPTIC_FEEDBACK_TYPE);
+        progressBarRef.current.fillProgressBar();
+        accruePoints(10);
+        setTimeout(() => {
+            setAnswer("");
+            inputRef.current.focus();
+            setResult(null);
+            fetchTask();
+        }, 1000);
+    }
+
     const checkAnswer = () => {
         if (!answer || !task) {
             setResult(null);
@@ -58,14 +86,7 @@ const PlayPage = () => {
         const isCorrect = parseInt(answer) === task.answers[0];
         setResult(isCorrect);
         if (isCorrect) {
-            window.Telegram.WebApp.HapticFeedback.impactOccurred(HAPTIC_FEEDBACK_TYPE);
-            progressBarRef.current.fillProgressBar();
-            setTimeout(() => {
-                setAnswer("");
-                inputRef.current.focus();
-                setResult(null);
-                fetchTask();
-            }, 1000);
+            successAnswer();
         }
     };
 
