@@ -42,6 +42,9 @@ def setup_middlewares(app):
 
             user_data = verify_telegram_init_data(init_data)
 
+            if isinstance(user_data, JSONResponse):
+                return user_data
+
             user = user_data.get("user")
 
             request.state.telegram_id = user.get("id")

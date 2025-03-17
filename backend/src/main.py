@@ -20,7 +20,7 @@ async def lifespan(app: FastAPI):
     await app.state.redis_client.close()
 
 
-app = FastAPI(title="mathUP-Mini-App", version="0.0.1", lifespan=lifespan)
+app = FastAPI(title="mathUP-Mini-App", version="0.0.2", lifespan=lifespan)
 
 setup_middlewares(app)
 

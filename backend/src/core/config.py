@@ -38,8 +38,8 @@ class Settings(BaseSettings):
     BOT_ID: str
     TELEGRAM_PUBLIC_KEY: str
 
-    # 60 minutes * 24 hours * 8 days = 8 days
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8
+    # 24 часа
+    AUTH_DATE_EXPIRE: int = 60 * 60
 
     BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = [
         "http://localhost:3000",

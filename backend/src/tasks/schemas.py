@@ -3,15 +3,15 @@ from enum import Enum
 
 
 class TaskType(Enum):
-    LINEAR_EQUATION = "LinearEquation"
-    QUADRATIC_EQUATION = "QuadraticEquation"
-    SIMPLE_EXAMPLE = "SimpleExample"
+    LINEAR_EQUATION = "LINEAR_EQUATION"
+    QUADRATIC_EQUATION = "QUADRATIC_EQUATION"
+    SIMPLE_EXAMPLE = "SIMPLE_EXAMPLE"
 
 
 class TaskComplexity(Enum):
-    EASY = "Easy"
-    MEDIUM = "Medium"
-    HARD = "Hard"
+    EASY = "EASY"
+    MEDIUM = "MEDIUM"
+    HARD = "HARD"
 
 
 class BaseTaskExample(BaseModel):

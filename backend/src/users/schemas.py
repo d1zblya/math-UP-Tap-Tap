@@ -1,55 +1,44 @@
-from datetime import datetime
-
-from typing import Optional
-
+from datetime import datetime, timezone
 from pydantic import BaseModel, Field, ConfigDict
+from src.tasks.schemas import TaskComplexity
 
 
-class UserBase(BaseModel):
-    tg_id: Optional[int] = Field(None)
-    first_name: Optional[str] = Field(None)
-    points: Optional[int] = Field(None)
-    bio: Optional[str] = Field(None)
-
-
-class User(UserBase):
-    tg_id: int
-    first_name: str
-    points: int
-    registration_date: datetime
-    bio: str
+class User(BaseModel):
+    tg_id: int = Field(..., gt=0)
+    first_name: str = Field(..., min_length=1, max_length=100)
+    points: int = Field(
+        default=0,
+        ge=0,
+        description="Баллы пользователя. Значение по умолчанию — 0"
+    )
+    registration_date: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    bio: str = Field(default="Описание вашего профиля", max_length=256)
 
     model_config = ConfigDict(from_attributes=True)
 
 
-class UserCreate(UserBase):
-    tg_id: int
-    first_name: str
-    points: int = Field(default=0)
-    bio: str = Field(default="Описание вашего профиля")
+class UserHistory(BaseModel):
+    tg_id: int = Field(..., gt=0)
+    task_complexity: TaskComplexity = Field(...)
+    task: str = Field(..., min_length=1)
+    points: int = Field(..., ge=0)
+    true_answer: int = Field(...)
+    user_answer: int = Field(...)
 
 
-class UserUpdate(UserBase):
-    tg_id: int
-    bio: str
+class UserQuests(BaseModel):
+    tg_id: int = Field(..., gt=0)
+    quest_id: int = Field(..., gt=0)
+    is_completed: bool = Field(default=False)
+    date_assigned: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    count_result: int = Field(
+        default=0,
+        ge=0,
+        description="Счетчик увеличивается по мере выполнения заданий"
+    )
 
 
-class UserHistoryBase(BaseModel):
-    tg_id: Optional[int] = Field(None)
-    task: Optional[str] = Field(None)
-    true_answer: Optional[int] = Field(None)
-    user_answer: Optional[int] = Field(None)
-
-
-class UserHistory(UserHistoryBase):
-    tg_id: int
-    task: str
-    true_answer: int
-    user_answer: int
-
-
-class UserHistoryCreate(UserHistoryBase):
-    tg_id: Optional[int] = Field(None)
-    task: str
-    true_answer: int
-    user_answer: int
+class CheckUserQuests(BaseModel):
+    task_complexity: TaskComplexity = Field(...)
+    true_answer: int = Field(...)
+    user_answer: int = Field(...)

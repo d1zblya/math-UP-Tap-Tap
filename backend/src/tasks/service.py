@@ -48,7 +48,7 @@ class TaskService:
     @classmethod
     async def get_simple_example(cls) -> Optional[BaseTaskExample]:
         try:
-            simple_example = await TaskGeneratorService.generate_simple_example(2)
+            simple_example = await TaskGeneratorService.generate_simple_example(step=2)
         except Exception as e:
             msg = f"Couldn't generate a simple example, detail ---> {str(e)}"
             logger.error(msg)
