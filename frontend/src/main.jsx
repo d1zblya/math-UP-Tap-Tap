@@ -6,7 +6,6 @@ import {BrowserRouter} from "react-router-dom";
 const TG = window.Telegram.WebApp;
 TG.MainButton.hide()
 TG.expand()
-TG.ready()
 
 
 createRoot(document.getElementById('root')).render(

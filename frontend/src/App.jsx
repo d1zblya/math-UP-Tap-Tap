@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 import {Route, Routes} from 'react-router-dom';
-import {useTelegram} from './hooks/useTelegram';
 import UserPanel from './components/layout/UserPanel/UserPanel.jsx';
 import PlayPage from './pages/PlayPage/PlayPage.jsx';
 import Navigation from './components/layout/Navigation/Navigation.jsx';
@@ -16,7 +15,7 @@ const useUserData = () => {
     const [avatarUrl, setAvatarUrl] = useState(
         'https://fikiwiki.com/uploads/posts/2022-02/1644862081_1-fikiwiki-com-p-kuritsi-krasivie-kartinki-2.jpg'
     );
-    const {tg} = useTelegram();
+    const tg = window.Telegram.WebApp;
 
     useEffect(() => {
         if (tg.initDataUnsafe?.user) {

@@ -1,0 +1,36 @@
+.Level {
+    width: 120px;
+    height: 130px;
+    position: relative;
+}
+
+.hexagon-border {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(37deg, rgba(191, 0, 255, 0.64) 8.86%, #3300FF 103.86%);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hexagon-inner {
+    width: 94%;
+    height: 94%;
+    background: #0D0D0D;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hexagon-inner:hover {
+    background: #1E1E1E;
+}
+
+.hexagon-content {
+    color: white;
+    font-size: 24px;
+    font-family: "Benzin-Bold", sans-serif;
+}

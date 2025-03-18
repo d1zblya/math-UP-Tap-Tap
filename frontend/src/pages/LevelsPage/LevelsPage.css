@@ -1,0 +1,17 @@
+.level-selector {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 40px 30px 40px;
+}
+
+.vertical-line {
+    margin: -65px 0;
+}
+
+.task-block {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
