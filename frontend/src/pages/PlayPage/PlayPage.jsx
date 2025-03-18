@@ -54,12 +54,13 @@ const PlayPage = ({level}) => {
         const tgId = TG.initDataUnsafe.user.id;
         const data = {
             tg_id: tgId,
-            task_complexity: task.task_complexity,
+            task_complexity: searchParams.get("difficulty"),
             task: task.expression_latex,
             points: count,
             true_answer: task.answers[0],
             user_answer: parseInt(answer),
         };
+        console.log(data)
         await request(`users/${tgId}/history`, 'POST', data);
     };
 
