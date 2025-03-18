@@ -58,7 +58,7 @@ const PlayPage = ({level}) => {
             task: task.expression_latex,
             points: count,
             true_answer: task.answers,
-            user_answer: answer,
+            user_answer: parseInt(answer),
         };
         await request(`users/${tgId}/history`, 'POST', data);
     };
