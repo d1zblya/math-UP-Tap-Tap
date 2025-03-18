@@ -11,12 +11,15 @@ import "./PlayPage.css";
 
 const HAPTIC_FEEDBACK_TYPE = "light";
 
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 const PlayPage = ({level}) => {
     const [searchParams] = useSearchParams();
     const [answer, setAnswer] = useState("");
     const [result, setResult] = useState(null);
-    const {user, loading: userLoading, error: userError} = useApiUser();
-
+    const {user, loading: userLoading, error: userError, fetchUser} = useApiUser();
     const {task, loading: taskLoading, error: taskError, fetchTask} = useTask(searchParams.get("difficulty"));
     const inputRef = useRef(null);
     const spanRef = useRef(null);
@@ -46,29 +49,51 @@ const PlayPage = ({level}) => {
         }
     };
 
-    const handleComplete = () => {
-        console.log("УРА УРА ПОБЕДА");
-    };
-
     const accruePoints = async (count) => {
         const tgId = TG.initDataUnsafe.user.id;
         const data = {
             tg_id: tgId,
-            task_complexity: searchParams.get("difficulty").toUpperCase(),
+            task_complexity: task.complexity,
             task: task.expression_latex,
             points: count,
             true_answer: task.answers[0],
             user_answer: parseInt(answer),
         };
-        console.log(task)
-        console.log(data)
         await request(`users/${tgId}/history`, 'POST', data);
+    };
+
+    const handleComplete = () => {
+        let count = 0
+        switch (task.complexity) {
+            case "EASY":
+                count = 50;
+                break;
+            case "MEDIUM":
+                count = 100;
+                break;
+            case "HARD":
+                count = 200;
+                break;
+        }
+        accruePoints(count)
     };
 
     const successAnswer = () => {
         TG.HapticFeedback.impactOccurred(HAPTIC_FEEDBACK_TYPE);
         progressBarRef.current.fillProgressBar();
-        accruePoints(10);
+        let count = 0;
+        switch (task.complexity) {
+            case "EASY":
+                count = getRandomNumber(1, 5);
+                break;
+            case "MEDIUM":
+                count = getRandomNumber(5, 15);
+                break;
+            case "HARD":
+                count = getRandomNumber(15, 30);
+                break;
+        }
+        accruePoints(count)
         setTimeout(() => {
             setAnswer("");
             inputRef.current.focus();
