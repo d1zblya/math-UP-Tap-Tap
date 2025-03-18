@@ -57,7 +57,7 @@ const PlayPage = ({level}) => {
             task_complexity: task.task_complexity,
             task: task.expression_latex,
             points: count,
-            true_answer: task.answers,
+            true_answer: task.answers[0],
             user_answer: parseInt(answer),
         };
         await request(`users/${tgId}/history`, 'POST', data);
