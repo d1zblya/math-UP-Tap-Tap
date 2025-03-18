@@ -26,8 +26,8 @@ async def get_user_history(tg_id: int) -> list[UserHistory]:
 
 
 @user_router.post("/{tg_id}/history")
-async def create_record_in_user_history(user_history: UserHistory) -> None:
-    await UserService.create_record_in_user_history(user_history)
+async def create_record_in_user_history(user_history: UserHistory) -> int:
+    return await UserService.create_record_in_user_history(user_history)
 
 
 @user_router.post("/{tg_id}/quests/check")

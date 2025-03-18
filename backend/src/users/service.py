@@ -56,7 +56,7 @@ class UserService:
         return user_history
 
     @classmethod
-    async def create_record_in_user_history(cls, user_history: UserHistory) -> None:
+    async def create_record_in_user_history(cls, user_history: UserHistory) -> int:
         async with async_session_maker() as session:
             user = await UserDAO.find_one_or_none(session, tg_id=user_history.tg_id)
             if user is None:
@@ -73,6 +73,8 @@ class UserService:
             await session.commit()
 
             await UserHistoryDAO.add(session, user_history)
+            user_points = user.points
+            return user_points
 
     @classmethod
     async def check_user_quests(cls, tg_id: int, data_for_check_user_quests: CheckUserQuests) -> None:
