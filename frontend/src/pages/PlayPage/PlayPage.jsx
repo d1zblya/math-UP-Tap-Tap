@@ -11,11 +11,12 @@ import "./PlayPage.css";
 
 const HAPTIC_FEEDBACK_TYPE = "light";
 
-const PlayPage = () => {
+const PlayPage = ({level}) => {
     const [searchParams] = useSearchParams();
     const [answer, setAnswer] = useState("");
     const [result, setResult] = useState(null);
     const {user, loading: userLoading, error: userError} = useApiUser();
+
     const {task, loading: taskLoading, error: taskError, fetchTask} = useTask(searchParams.get("difficulty"));
     const inputRef = useRef(null);
     const spanRef = useRef(null);
@@ -94,6 +95,7 @@ const PlayPage = () => {
     if (userError || taskError) {
         return <div>Error: {userError?.message || taskError?.message}</div>;
     }
+
 
     return (
         <div className="PlayPage">
