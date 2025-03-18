@@ -100,6 +100,7 @@ const PlayPage = ({level}) => {
             setResult(null);
             fetchTask();
         }, 1000);
+        fetchUser()
     };
 
     const checkAnswer = () => {
