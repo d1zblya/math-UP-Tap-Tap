@@ -54,19 +54,19 @@ const PlayPage = () => {
     const accruePoints = useCallback(async (points) => {
         const userData = {
             tg_id: initDataUnsafe.user.id,
-            task_complexity: task.complexity,
-            task: task.expression_latex,
+            task_complexity: task?.complexity,
+            task: task?.expression_latex,
             points: points,
-            true_answer: task.answers[0],
+            true_answer: task?.answers[0],
             user_answer: parseInt(answer),
         };
         await request(`users/${userData.tg_id}/history`, "POST", userData);
     }, [task, answer, initDataUnsafe.user?.id]);
 
     const handleComplete = useCallback(() => {
-        const points = calculatePoints(task.complexity)?.fixed;
+        const points = calculatePoints(task?.complexity).fixed;
         if (points) accruePoints(points);
-    }, [task.complexity, calculatePoints, accruePoints]);
+    }, [task?.complexity, calculatePoints, accruePoints]);
 
     const handleSuccessAnswer = useCallback(() => {
         HapticFeedback.impactOccurred(HAPTIC_FEEDBACK_TYPE);
@@ -83,12 +83,12 @@ const PlayPage = () => {
         }, 1000);
 
         fetchUser();
-    }, [HapticFeedback, task.complexity, calculatePoints, accruePoints, fetchTask, fetchUser]);
+    }, [HapticFeedback, task?.complexity, calculatePoints, accruePoints, fetchTask, fetchUser]);
 
     const checkAnswer = useCallback(() => {
         if (!answer || !task?.answers) return;
 
-        const isCorrect = parseInt(answer) === task.answers[0];
+        const isCorrect = parseInt(answer) === task?.answers[0];
         setResult(isCorrect);
 
         if (isCorrect) handleSuccessAnswer();
