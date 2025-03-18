@@ -60,7 +60,7 @@ const PlayPage = ({level}) => {
             true_answer: task.answers,
             user_answer: answer,
         };
-        await request(`${tgId}/history`, 'POST', data);
+        await request(`users/${tgId}/history`, 'POST', data);
     };
 
     const successAnswer = () => {
