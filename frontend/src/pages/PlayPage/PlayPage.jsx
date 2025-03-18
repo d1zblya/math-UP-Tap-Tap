@@ -1,20 +1,18 @@
 import React, {useEffect, useRef, useState} from "react";
+import {useSearchParams} from "react-router-dom";
 import BalancePanel from "../../components/shared/BalancePanel/BalancePanel.jsx";
 import TaskBlock from "../../components/play/TaskBlock/TaskBlock.jsx";
 import CheckAnswerButton from "../../components/play/CheckAnswerButton/CheckAnswerButton.jsx";
+import ProgressBar from "../../components/play/ProgressBar/ProgressBar.jsx";
 import {useApiUser} from "../../hooks/useApiUser.js";
 import {useTask} from "../../hooks/useTask.js";
-import ProgressBar from "../../components/play/ProgressBar/ProgressBar.jsx";
-import "./PlayPage.css"
-import {useSearchParams} from "react-router-dom";
 import {request} from "../../api/requests.js";
-import {useTelegram} from "../../hooks/useTelegram.js";
+import "./PlayPage.css";
 
 const HAPTIC_FEEDBACK_TYPE = "light";
 
-
 const PlayPage = () => {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const [answer, setAnswer] = useState("");
     const [result, setResult] = useState(null);
     const {user, loading: userLoading, error: userError} = useApiUser();
@@ -22,16 +20,15 @@ const PlayPage = () => {
     const inputRef = useRef(null);
     const spanRef = useRef(null);
     const progressBarRef = useRef(null);
-    const TG = useTelegram();
+    const TG = window.Telegram.WebApp;
 
-    const updateInputWidth = () => {
-        if (inputRef.current &&
-            spanRef.current) {
-            inputRef.current.style.width = `${spanRef.current.offsetWidth}px`;
-        }
-    };
 
     useEffect(() => {
+        const updateInputWidth = () => {
+            if (inputRef.current && spanRef.current) {
+                inputRef.current.style.width = `${spanRef.current.offsetWidth}px`;
+            }
+        };
         updateInputWidth();
     }, [answer]);
 
@@ -49,21 +46,21 @@ const PlayPage = () => {
     };
 
     const handleComplete = () => {
-        console.log("УРА УРА ПОБЕДА")
-    }
+        console.log("УРА УРА ПОБЕДА");
+    };
 
-    async function accruePoints(count) {
-        let tgId = TG.initDataUnsafe.user.id
-        let data = {
+    const accruePoints = async (count) => {
+        const tgId = TG.initDataUnsafe.user.id;
+        const data = {
             tg_id: tgId,
             task_complexity: task.task_complexity,
             task: task.expression_latex,
             points: count,
             true_answer: task.answers,
             user_answer: answer,
-        }
+        };
         await request(`${tgId}/history`, 'POST', data);
-    }
+    };
 
     const successAnswer = () => {
         TG.HapticFeedback.impactOccurred(HAPTIC_FEEDBACK_TYPE);
@@ -75,7 +72,7 @@ const PlayPage = () => {
             setResult(null);
             fetchTask();
         }, 1000);
-    }
+    };
 
     const checkAnswer = () => {
         if (!answer || !task) {
@@ -99,7 +96,7 @@ const PlayPage = () => {
     }
 
     return (
-        <div className={"PlayPage"}>
+        <div className="PlayPage">
             <BalancePanel balance={user?.points}/>
             <ProgressBar ref={progressBarRef} onComplete={handleComplete}/>
             <div className="task-block">
