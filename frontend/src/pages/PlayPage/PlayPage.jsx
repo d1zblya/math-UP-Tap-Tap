@@ -59,7 +59,7 @@ const PlayPage = ({level}) => {
             true_answer: task.answers[0],
             user_answer: parseInt(answer),
         };
-        await request(`users/${tgId}/history`, 'POST', data);
+        console.log(await request(`users/${tgId}/history`, 'POST', data));
     };
 
     const handleComplete = () => {
