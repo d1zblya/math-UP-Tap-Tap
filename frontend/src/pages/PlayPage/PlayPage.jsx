@@ -70,10 +70,10 @@ const PlayPage = () => {
 
     const handleSuccessAnswer = useCallback(() => {
         HapticFeedback.impactOccurred(HAPTIC_FEEDBACK_TYPE);
-        progressBarRef.current.fillProgressBar();
-
         const pointsConfig = calculatePoints(task.complexity);
         if (pointsConfig) accruePoints(pointsConfig.random);
+        progressBarRef.current.fillProgressBar();
+
 
 
         setTimeout(() => {
