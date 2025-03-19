@@ -17,7 +17,7 @@ export const useApiUser = () => {
     };
     useEffect(() => {
         fetchUser();
-    }, []);
+    }, [user]);
 
     return {user, loading, error, fetchUser};
 };
