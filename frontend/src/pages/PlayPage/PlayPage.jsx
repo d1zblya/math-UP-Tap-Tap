@@ -60,13 +60,12 @@ const PlayPage = () => {
             true_answer: task?.answers[0],
             user_answer: parseInt(answer),
         };
-        await request(`users/${userData.tg_id}/history`, "POST", userData);
+        user.points = await request(`users/${userData.tg_id}/history`, "POST", userData);
     }, [task, answer, initDataUnsafe.user?.id]);
 
     const handleComplete = useCallback(() => {
         const points = calculatePoints(task?.complexity).fixed;
         if (points) accruePoints(points);
-        fetchUser();
     }, [task?.complexity, calculatePoints, accruePoints]);
 
     const handleSuccessAnswer = useCallback(() => {
