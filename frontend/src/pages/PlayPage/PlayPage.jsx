@@ -82,7 +82,7 @@ const PlayPage = () => {
             setResult(null);
         }, 1000);
 
-    }, [HapticFeedback, task?.complexity, calculatePoints, accruePoints, fetchTask, fetchUser]);
+    }, [HapticFeedback, task?.complexity, calculatePoints, accruePoints, fetchTask, user]);
 
     const checkAnswer = useCallback(() => {
         if (!answer || !task?.answers) return;
