@@ -82,7 +82,6 @@ const PlayPage = () => {
             fetchTask();
         }, 1000);
 
-        fetchUser();
     }, [HapticFeedback, task?.complexity, calculatePoints, accruePoints, fetchTask, fetchUser]);
 
     const checkAnswer = useCallback(() => {
