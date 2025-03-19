@@ -9,7 +9,7 @@
 
 @font-face {
     font-family: 'Benzin-Bold';
-    src: url('./fonts/benzin/Benzin-Bold.woff2') format('woff2'),
+    src: url('./fonts/benzin/Benzin-Semibold.woff2') format('woff2'),
     url('./fonts/benzin/Benzin-Bold.ttf') format('ttf');
 }
 
@@ -38,7 +38,6 @@
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
     background: var(--main-bg-color);
     color: var(--main-text-color);
 }
