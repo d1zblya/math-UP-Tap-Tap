@@ -61,7 +61,7 @@ const PlayPage = () => {
             user_answer: parseInt(answer),
         };
         user.points = await request(`users/${userData.tg_id}/history`, "POST", userData);
-    }, [task, answer, initDataUnsafe.user?.id]);
+    }, [task, answer, initDataUnsafe.user?.id, user]);
 
     const handleComplete = useCallback(() => {
         const points = calculatePoints(task?.complexity).fixed;
@@ -73,7 +73,6 @@ const PlayPage = () => {
         const pointsConfig = calculatePoints(task.complexity);
         if (pointsConfig) accruePoints(pointsConfig.random);
         progressBarRef.current.fillProgressBar();
-
 
 
         setTimeout(() => {
