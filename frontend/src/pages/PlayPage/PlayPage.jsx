@@ -10,7 +10,7 @@ import {request} from "../../api/requests";
 import "./PlayPage.css";
 
 const HAPTIC_FEEDBACK_TYPE = "light";
-const INPUT_VALIDATION_REGEX = /^\d*\.?\d*$/;
+const INPUT_VALIDATION_REGEX = /^-?\d*\.?\d*$/;
 const POINTS_CONFIG = {
     EASY: {base: 50, min: 1, max: 5},
     MEDIUM: {base: 100, min: 5, max: 15},
@@ -66,6 +66,7 @@ const PlayPage = () => {
     const handleComplete = useCallback(() => {
         const points = calculatePoints(task?.complexity).fixed;
         if (points) accruePoints(points);
+        fetchUser();
     }, [task?.complexity, calculatePoints, accruePoints]);
 
     const handleSuccessAnswer = useCallback(() => {
