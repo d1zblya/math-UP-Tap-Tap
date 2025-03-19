@@ -74,12 +74,13 @@ const PlayPage = () => {
 
         const pointsConfig = calculatePoints(task.complexity);
         if (pointsConfig) accruePoints(pointsConfig.random);
+        fetchUser();
 
         setTimeout(() => {
+            fetchTask();
             setAnswer("");
             inputRef.current.focus();
             setResult(null);
-            fetchTask();
         }, 1000);
 
     }, [HapticFeedback, task?.complexity, calculatePoints, accruePoints, fetchTask, fetchUser]);
