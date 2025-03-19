@@ -74,7 +74,7 @@ const PlayPage = () => {
 
         const pointsConfig = calculatePoints(task.complexity);
         if (pointsConfig) accruePoints(pointsConfig.random);
-        fetchUser();
+
 
         setTimeout(() => {
             fetchTask();
