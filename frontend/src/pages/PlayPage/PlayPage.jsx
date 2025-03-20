@@ -43,7 +43,7 @@ const PlayPage = () => {
     }, [answer, updateInputWidth]);
 
     useEffect(() => {
-        setPoints(user.points)
+        setPoints(user?.points)
     }, [user]);
 
     const handleAnswerChange = (e) => {
