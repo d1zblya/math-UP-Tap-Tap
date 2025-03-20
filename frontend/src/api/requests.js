@@ -14,8 +14,7 @@ async function request(endpoint, method = "GET", data = {}) {
             },
             data: method === "GET" ? null : data,
         });
-
-
+        console.log(response);
         if (response.status === 200) {
             return response.data;
         } else if (response.status === 401 || response.status === 500) {
