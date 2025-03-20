@@ -25,6 +25,8 @@ const PlayPage = () => {
     const [result, setResult] = useState(null);
     const {user, loading: userLoading, error: userError} = useApiUser();
     const {task, loading: taskLoading, error: taskError, fetchTask} = useTask(searchParams.get("difficulty"));
+    const [points, setPoints] = useState(user.points);
+
 
     const inputRef = useRef(null);
     const spanRef = useRef(null);
@@ -60,7 +62,7 @@ const PlayPage = () => {
             true_answer: task?.answers[0],
             user_answer: parseInt(answer),
         };
-        user.points = await request(`users/${userData.tg_id}/history`, "POST", userData);
+        setPoints(await request(`users/${userData.tg_id}/history`, "POST", userData));
     }, [task, answer, initDataUnsafe.user?.id, user]);
 
     const handleComplete = useCallback(() => {
@@ -102,7 +104,7 @@ const PlayPage = () => {
 
     return (
         <div className="PlayPage">
-            <BalancePanel balance={user?.points}/>
+            <BalancePanel balance={points}/>
             <ProgressBar ref={progressBarRef} onComplete={handleComplete}/>
 
             <div className="task-block">
