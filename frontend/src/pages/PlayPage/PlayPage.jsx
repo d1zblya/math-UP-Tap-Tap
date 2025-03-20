@@ -18,6 +18,14 @@ const POINTS_CONFIG = {
 };
 
 const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+const sum = (arr) => {
+    let sum = 0;
+    arr.forEach(function (num) {
+        sum += num;
+    });
+    return sum;
+}
+
 
 const PlayPage = () => {
     const [searchParams] = useSearchParams();
@@ -37,7 +45,6 @@ const PlayPage = () => {
             inputRef.current.style.width = `${spanRef.current.offsetWidth}px`;
         }
     }, []);
-
     useEffect(() => {
         updateInputWidth();
     }, [answer, updateInputWidth]);
@@ -92,9 +99,8 @@ const PlayPage = () => {
     const checkAnswer = useCallback(() => {
         if (!answer || !task?.answers) return;
 
-        const isCorrect = parseInt(answer) === task?.answers[0];
+        const isCorrect = parseInt(answer) === sum(task?.answers);
         setResult(isCorrect);
-
         if (isCorrect) handleSuccessAnswer();
     }, [answer, task, handleSuccessAnswer]);
 
