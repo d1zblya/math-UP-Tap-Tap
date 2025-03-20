@@ -23,10 +23,10 @@ const PlayPage = () => {
     const [searchParams] = useSearchParams();
     const [answer, setAnswer] = useState("");
     const [result, setResult] = useState(null);
-    const {user, loading: userLoading, error: userError} = useApiUser();
+    const {user, loading: userLoading, error: userError, fetchUser} = useApiUser();
     const {task, loading: taskLoading, error: taskError, fetchTask} = useTask(searchParams.get("difficulty"));
-    console.log(user)
-    const [points, setPoints] = useState(user.points);
+    fetchUser()
+    const [points, setPoints] = useState(user?.points);
 
     const inputRef = useRef(null);
     const spanRef = useRef(null);
