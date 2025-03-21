@@ -1,7 +1,9 @@
+from typing import Type, Union
+
 from fastapi import APIRouter, Request
 from fastapi_cache.decorator import cache
 
-from src.users.schemas import User, UserHistory, CheckUserQuests
+from src.users.schemas import User, UserHistory, CheckUserQuests, UserQuests
 from src.users.service import UserService
 
 user_router = APIRouter(prefix="/api/users", tags=["user"])
@@ -35,3 +37,8 @@ async def check_user_quests(tg_id: int, data_for_check_user_quests: CheckUserQue
         tg_id=tg_id,
         data_for_check_user_quests=data_for_check_user_quests,
     )
+
+
+@user_router.get("/{tg_id}/quests")
+async def get_user_quests(tg_id: int) -> Union[list[UserQuests], UserQuests]:
+    return await UserService.get_user_assigned_quests(tg_id)
