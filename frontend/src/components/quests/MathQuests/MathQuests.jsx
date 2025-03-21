@@ -9,32 +9,32 @@ const MathQuests = () => {
         [
             {
                 text: "Решить 30 примеров",
-                img: "tg.png",
+                img: "math.png",
                 reward: "100",
             },
             {
                 text: "Решить 100 примеров",
-                img: "tg.png",
+                img: "math.png",
                 reward: "500",
             },
             {
                 text: "Решить 256 примеров",
-                img: "tg.png",
+                img: "math.png",
                 reward: "1000",
             },
             {
                 text: "Решить 30 легких примеров",
-                img: "tg.png",
+                img: "math.png",
                 reward: "100",
             },
             {
                 text: "Решить 30 средних примеров",
-                img: "tg.png",
+                img: "math.png",
                 reward: "300",
             },
             {
                 text: "Решить 30 сложных примеров",
-                img: "tg.png",
+                img: "math.png",
                 reward: "1000",
             },
         ],
