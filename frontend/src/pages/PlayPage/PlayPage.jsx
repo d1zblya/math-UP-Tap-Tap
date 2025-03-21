@@ -7,6 +7,7 @@ import ProgressBar from "../../components/play/ProgressBar/ProgressBar";
 import {useApiUser} from "../../hooks/useApiUser";
 import {useTask} from "../../hooks/useTask";
 import {request} from "../../api/requests";
+import {getRandomNumber, sum} from "../../utils";
 import "./PlayPage.css";
 
 const HAPTIC_FEEDBACK_TYPE = "light";
@@ -17,17 +18,8 @@ const POINTS_CONFIG = {
     HARD: {base: 200, min: 15, max: 30},
 };
 
-const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-const sum = (arr) => {
-    let sum = 0;
-    arr.forEach(function (num) {
-        sum += num;
-    });
-    return sum;
-}
 
-
-const PlayPage = () => {
+const PlayPage = ({level}) => {
     const [searchParams] = useSearchParams();
     const [answer, setAnswer] = useState("");
     const [result, setResult] = useState(null);

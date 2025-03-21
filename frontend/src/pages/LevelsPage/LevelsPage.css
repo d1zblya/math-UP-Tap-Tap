@@ -1,6 +1,6 @@
 .level-selector {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     padding: 30px 40px 30px 40px;
 }
 

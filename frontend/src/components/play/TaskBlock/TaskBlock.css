@@ -12,6 +12,7 @@
     font-family: "Benzin-Bold", sans-serif;
     border: 1px solid #ffffff;
     height: 150px;
+    min-width: 150px;
 }
 
 .answer {

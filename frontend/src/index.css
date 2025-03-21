@@ -53,6 +53,9 @@ body {
     color: var(--main-text-color);
     text-align: center;
     height: 70px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .navigation {

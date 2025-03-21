@@ -1,0 +1,18 @@
+.PlayLevel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.task-block {
+    height: 100%;
+    display: flex;
+}
+
+.level-title {
+    font-family: "Benzin-Bold", sans-serif;
+    font-size: 25px;
+    margin-top: 20px;
+}
