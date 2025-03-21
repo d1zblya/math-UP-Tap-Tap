@@ -5,7 +5,7 @@
 }
 
 .katex {
-    font-family: 'Benzin-Bold', sans-serif;
+    font-family: 'Benzin-Bold', sans-serif !important;
     font-size: 24px;
     display: flex;
     align-items: center;

@@ -7,6 +7,7 @@ import ProgressBar from "../../components/play/ProgressBar/ProgressBar";
 import {useApiUser} from "../../hooks/useApiUser";
 import {useTask} from "../../hooks/useTask";
 import {request} from "../../api/requests";
+import {getRandomNumber, sum} from "../../utils";
 import "./PlayPage.css";
 
 const HAPTIC_FEEDBACK_TYPE = "light";
@@ -17,20 +18,11 @@ const POINTS_CONFIG = {
     HARD: {base: 200, min: 15, max: 30},
 };
 
-const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-const sum = (arr) => {
-    let sum = 0;
-    arr.forEach(function (num) {
-        sum += num;
-    });
-    return sum;
-}
-
-
-const PlayPage = () => {
+const PlayPage = ({level}) => {
     const [searchParams] = useSearchParams();
     const [answer, setAnswer] = useState("");
     const [result, setResult] = useState(null);
+    const [isChecking, setIsChecking] = useState(false);
     const {user, loading: userLoading, error: userError} = useApiUser();
     const {task, loading: taskLoading, error: taskError, fetchTask} = useTask(searchParams.get("difficulty"));
     const [points, setPoints] = useState(0);
@@ -40,17 +32,19 @@ const PlayPage = () => {
     const progressBarRef = useRef(null);
     const {HapticFeedback, initDataUnsafe} = window.Telegram.WebApp;
 
+    // Обновление ширины input в зависимости от содержимого
     const updateInputWidth = useCallback(() => {
         if (inputRef.current && spanRef.current) {
             inputRef.current.style.width = `${spanRef.current.offsetWidth}px`;
         }
     }, []);
+
     useEffect(() => {
         updateInputWidth();
     }, [answer, updateInputWidth]);
 
     useEffect(() => {
-        setPoints(user?.points)
+        setPoints(user?.points);
     }, [user]);
 
     const handleAnswerChange = (e) => {
@@ -58,10 +52,12 @@ const PlayPage = () => {
         if (INPUT_VALIDATION_REGEX.test(value)) setAnswer(value);
     };
 
+
     const calculatePoints = useCallback((complexity) => {
         const {base, min, max} = POINTS_CONFIG[complexity] || {};
         return base ? {fixed: base, random: getRandomNumber(min, max)} : null;
     }, []);
+
 
     const accruePoints = useCallback(async (points) => {
         const userData = {
@@ -73,12 +69,13 @@ const PlayPage = () => {
             user_answer: parseInt(answer),
         };
         setPoints(await request(`users/${userData.tg_id}/history`, "POST", userData));
-    }, [task, answer, initDataUnsafe.user?.id, user]);
+    }, [task, answer, initDataUnsafe.user?.id]);
 
     const handleComplete = useCallback(() => {
         const points = calculatePoints(task?.complexity).fixed;
         if (points) accruePoints(points);
     }, [task?.complexity, calculatePoints, accruePoints]);
+
 
     const handleSuccessAnswer = useCallback(() => {
         HapticFeedback.impactOccurred(HAPTIC_FEEDBACK_TYPE);
@@ -86,23 +83,24 @@ const PlayPage = () => {
         if (pointsConfig) accruePoints(pointsConfig.random);
         progressBarRef.current.fillProgressBar();
 
+        setIsChecking(true);
 
         setTimeout(() => {
             fetchTask();
             setAnswer("");
             inputRef.current.focus();
             setResult(null);
+            setIsChecking(false);
         }, 1000);
-
-    }, [HapticFeedback, task?.complexity, calculatePoints, accruePoints, fetchTask, user]);
+    }, [HapticFeedback, task?.complexity, calculatePoints, accruePoints, fetchTask]);
 
     const checkAnswer = useCallback(() => {
-        if (!answer || !task?.answers) return;
+        if (isChecking || !answer || !task?.answers) return;
 
         const isCorrect = parseInt(answer) === sum(task?.answers);
         setResult(isCorrect);
         if (isCorrect) handleSuccessAnswer();
-    }, [answer, task, handleSuccessAnswer]);
+    }, [answer, task, handleSuccessAnswer, isChecking]);
 
     const handleKeyPress = (e) => {
         if (e.key === "Enter") checkAnswer();
@@ -126,7 +124,7 @@ const PlayPage = () => {
                     inputRef={inputRef}
                     spanRef={spanRef}
                 />
-                <CheckAnswerButton onClick={checkAnswer}/>
+                <CheckAnswerButton onClick={checkAnswer} disabled={isChecking}/>
             </div>
         </div>
     );
