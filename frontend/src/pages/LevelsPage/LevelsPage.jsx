@@ -322,7 +322,7 @@ const LevelsPage = () => {
 
     useEffect(() => {
         window.scrollTo(0, document.body.scrollHeight);
-    }, []);
+    }, [currentLevel]);
 
     if (!currentLevel) {
         return (
