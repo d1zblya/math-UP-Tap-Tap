@@ -8,21 +8,26 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
 }
 
 .daily-quest-title {
     font-family: 'Benzin-Bold', sans-serif;
     font-size: 10px;
     margin-top: 2px;
+    justify-self: self-start;
 }
 
 .daily-quest-info {
     font-size: 8px;
     font-family: 'Benzin-Medium', sans-serif;
+    position: relative;
+
 }
 
 .daily-quest-reward {
     font-size: 9px;
     font-family: 'Benzin-Bold', sans-serif;
-    align-self: flex-end;
+    align-self: end;
+    justify-self: end;
 }

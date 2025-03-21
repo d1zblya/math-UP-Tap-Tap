@@ -5,9 +5,9 @@ import "./DailyBlock.css"
 var _this = this;
 const DailyBlock = () => {
     const [dailyQuests, loading, error] = [
-        [{title: "Андрюха скам", info: "Заскамить андрюху многоуважаемого", reward: "100"},
-            {title: "Георгий убери телефон", info: "Спиздить и выкинуть пенал одноклассника", reward: "52"},
-            {title: "Кошмар полищук", info: "Поставить телефон на зарядку", reward: "-13412"},],
+        [{title: "Уравнения", info: "Решите 10 уравнений", reward: "100"},
+            {title: "Примеры", info: "Решите 5 примеров без ошибок", reward: "100"},
+            {title: "Заработок", info: "Заработайте за сегодня 300Mp", reward: "100"},],
         null, null]
 
     if (loading) {
