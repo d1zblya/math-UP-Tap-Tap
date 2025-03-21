@@ -1,10 +1,11 @@
-from typing import Optional
+from datetime import datetime
+from typing import Optional, Union
 
 from fastapi import HTTPException, status
 
 from src.database.session import async_session_maker
 from src.quests.dao import QuestDAO
-from src.quests.schemas import Quests
+from src.quests.schemas import Quests, QuestType
 from src.users.dao import UserDAO, UserHistoryDAO, UserQuestDAO
 from src.users.schemas import User, UserHistory, CheckUserQuests, UserQuests
 
@@ -89,7 +90,15 @@ class UserService:
                 quest: Quests = await QuestDAO.find_one_or_none(session, id=user_quest.quest_id)
 
                 if data_for_check_user_quests.task_complexity == quest.task_complexity:
-                    user_quest.count_result += 1
+                    if data_for_check_user_quests.quest_type == QuestType.SIMPLE_EXAMPLE and \
+                            data_for_check_user_quests.user_answer == data_for_check_user_quests.true_answer:
+                        user_quest.count_result += 1
+
+                    elif data_for_check_user_quests.quest_type == QuestType.STREAK_EXAMPLE:
+                        if data_for_check_user_quests.true_answer == data_for_check_user_quests.user_answer:
+                            user_quest.count_result += 1
+                        else:
+                            user_quest.count_result = 0  # Ошиблись – сброс счётчика
 
                 if user_quest.count_result >= quest.target:
                     user = await UserDAO.find_one_or_none(session, tg_id=tg_id)
@@ -98,3 +107,32 @@ class UserService:
                     user_quest.is_completed = True
 
                 await session.commit()
+
+    @classmethod
+    async def get_user_assigned_quests(cls, tg_id: int) -> Union[list[UserQuests], UserQuests]:
+        async with async_session_maker() as session:
+            user_quests: list[UserQuests] = await UserQuestDAO.find_all(session, tg_id=tg_id)
+            user_assigned_quests = [user_quest for user_quest in user_quests if
+                                    user_quest.date_assigned.date() >= datetime.now().date()]
+
+            return user_assigned_quests
+
+    @classmethod
+    async def add_new_user_quest(cls, tg_id: int, quest_id: int) -> None:
+        async with async_session_maker() as session:
+            try:
+                await UserQuestDAO.add(
+                    session,
+                    UserQuests(
+                        tg_id=tg_id,
+                        quest_id=quest_id,
+                        is_completed=False,
+                        date_assigned=datetime.now(),
+                        count_result=0,
+                    )
+                )
+                await session.commit()
+            except Exception as e:
+                msg = f"Cannot add new user quest ---> {str(e)}"
+                logger.error(msg)
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=msg)
