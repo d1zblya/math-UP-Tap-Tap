@@ -1,5 +1,7 @@
 from datetime import datetime, timezone
 from pydantic import BaseModel, Field, ConfigDict
+
+from src.quests.schemas import QuestType
 from src.tasks.schemas import TaskComplexity
 
 
@@ -42,6 +44,7 @@ class UserQuests(BaseModel):
 
 
 class CheckUserQuests(BaseModel):
+    quest_type: QuestType = Field(...)
     task_complexity: TaskComplexity = Field(...)
     true_answer: int = Field(...)
     user_answer: int = Field(...)

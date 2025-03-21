@@ -8,6 +8,7 @@ from src.core.cache import init_cache
 from loguru import logger
 
 from src.core.middleware import setup_middlewares
+from src.scheduler import start_scheduler
 from src.tasks.router import task_router
 from src.theory.router import theory_router
 from src.users.router import user_router
@@ -15,6 +16,7 @@ from src.users.router import user_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    start_scheduler()
     redis_client = app.state.redis_client = await init_cache()
     yield
     await app.state.redis_client.close()

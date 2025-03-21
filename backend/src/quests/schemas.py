@@ -1,6 +1,13 @@
+from enum import Enum
+
 from pydantic import BaseModel, Field
 
 from src.tasks.schemas import TaskComplexity
+
+
+class QuestType(Enum):
+    SIMPLE_EXAMPLE = "SIMPLE_EXAMPLE"
+    STREAK_EXAMPLE = "STREAK_EXAMPLE"
 
 
 class Quests(BaseModel):

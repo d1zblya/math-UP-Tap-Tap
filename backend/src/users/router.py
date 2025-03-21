@@ -8,7 +8,6 @@ user_router = APIRouter(prefix="/api/users", tags=["user"])
 
 
 @user_router.get("/me")
-@cache(expire=30)
 async def get_current_user(
         request: Request,
 ) -> User:

@@ -39,7 +39,7 @@ class Settings(BaseSettings):
     TELEGRAM_PUBLIC_KEY: str
 
     # 24 часа
-    AUTH_DATE_EXPIRE: int = 60 * 60
+    AUTH_DATE_EXPIRE: int = 60 * 60 * 24
 
     BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = [
         "http://localhost:3000",

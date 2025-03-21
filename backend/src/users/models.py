@@ -1,5 +1,4 @@
 from sqlalchemy import Column, Integer, String, DateTime, func, ForeignKey, Boolean, Enum
-from sqlalchemy.orm import relationship
 
 from src.database.session import Base
 from src.tasks.schemas import TaskComplexity
@@ -39,3 +38,12 @@ class UserQuestModel(Base):
     is_completed = Column(Boolean, server_default="False")
     date_assigned = Column(DateTime, server_default=func.now())
     count_result = Column(Integer, server_default="0")
+
+
+# class UserLevelProgressModel(Base):
+#     __tablename__ = 'user_level_progress'
+#
+#     id = Column(Integer, primary_key=True)
+#     tg_id = Column(Integer, ForeignKey('users.tg_id'), nullable=False)
+#     level_id = Column(Integer, ForeignKey("levels.id"), nullable=False)
+#     is_completed = Column(Boolean, nullable=False, default=False)
