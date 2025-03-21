@@ -14,8 +14,6 @@ async function request(endpoint, method = "GET", data = {}) {
             },
             data: method === "GET" ? null : data,
         });
-
-
         if (response.status === 200) {
             return response.data;
         } else if (response.status === 401 || response.status === 500) {
@@ -25,6 +23,9 @@ async function request(endpoint, method = "GET", data = {}) {
         }
 
     } catch (error) {
+        if (error.status === 401 || error.status === 500) {
+            TG.close()
+        }
         console.error('Ошибка при выполнении запроса:', error);
         throw error;
     }

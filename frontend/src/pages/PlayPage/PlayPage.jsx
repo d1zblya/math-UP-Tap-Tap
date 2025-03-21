@@ -1,134 +1,121 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useSearchParams} from "react-router-dom";
-import BalancePanel from "../../components/shared/BalancePanel/BalancePanel.jsx";
-import TaskBlock from "../../components/play/TaskBlock/TaskBlock.jsx";
-import CheckAnswerButton from "../../components/play/CheckAnswerButton/CheckAnswerButton.jsx";
-import ProgressBar from "../../components/play/ProgressBar/ProgressBar.jsx";
-import {useApiUser} from "../../hooks/useApiUser.js";
-import {useTask} from "../../hooks/useTask.js";
-import {request} from "../../api/requests.js";
+import BalancePanel from "../../components/shared/BalancePanel/BalancePanel";
+import TaskBlock from "../../components/play/TaskBlock/TaskBlock";
+import CheckAnswerButton from "../../components/play/CheckAnswerButton/CheckAnswerButton";
+import ProgressBar from "../../components/play/ProgressBar/ProgressBar";
+import {useApiUser} from "../../hooks/useApiUser";
+import {useTask} from "../../hooks/useTask";
+import {request} from "../../api/requests";
 import "./PlayPage.css";
 
 const HAPTIC_FEEDBACK_TYPE = "light";
+const INPUT_VALIDATION_REGEX = /^-?\d*\.?\d*$/;
+const POINTS_CONFIG = {
+    EASY: {base: 50, min: 1, max: 5},
+    MEDIUM: {base: 100, min: 5, max: 15},
+    HARD: {base: 200, min: 15, max: 30},
+};
 
-function getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+const sum = (arr) => {
+    let sum = 0;
+    arr.forEach(function (num) {
+        sum += num;
+    });
+    return sum;
 }
 
-const PlayPage = ({level}) => {
+
+const PlayPage = () => {
     const [searchParams] = useSearchParams();
     const [answer, setAnswer] = useState("");
     const [result, setResult] = useState(null);
-    const {user, loading: userLoading, error: userError, fetchUser} = useApiUser();
+    const {user, loading: userLoading, error: userError} = useApiUser();
     const {task, loading: taskLoading, error: taskError, fetchTask} = useTask(searchParams.get("difficulty"));
+    const [points, setPoints] = useState(0);
+
     const inputRef = useRef(null);
     const spanRef = useRef(null);
     const progressBarRef = useRef(null);
-    const TG = window.Telegram.WebApp;
+    const {HapticFeedback, initDataUnsafe} = window.Telegram.WebApp;
 
+    const updateInputWidth = useCallback(() => {
+        if (inputRef.current && spanRef.current) {
+            inputRef.current.style.width = `${spanRef.current.offsetWidth}px`;
+        }
+    }, []);
+    useEffect(() => {
+        updateInputWidth();
+    }, [answer, updateInputWidth]);
 
     useEffect(() => {
-        const updateInputWidth = () => {
-            if (inputRef.current && spanRef.current) {
-                inputRef.current.style.width = `${spanRef.current.offsetWidth}px`;
-            }
-        };
-        updateInputWidth();
-    }, [answer]);
+        setPoints(user?.points)
+    }, [user]);
 
     const handleAnswerChange = (e) => {
-        const value = e.target.value;
-        if (/^\d*\.?\d*$/.test(value)) {
-            setAnswer(value);
-        }
+        const {value} = e.target;
+        if (INPUT_VALIDATION_REGEX.test(value)) setAnswer(value);
     };
 
-    const handleKeyPress = (event) => {
-        if (event.key === "Enter") {
-            checkAnswer();
-        }
-    };
+    const calculatePoints = useCallback((complexity) => {
+        const {base, min, max} = POINTS_CONFIG[complexity] || {};
+        return base ? {fixed: base, random: getRandomNumber(min, max)} : null;
+    }, []);
 
-    const accruePoints = async (count) => {
-        const tgId = TG.initDataUnsafe.user.id;
-        const data = {
-            tg_id: tgId,
-            task_complexity: task.complexity,
-            task: task.expression_latex,
-            points: count,
-            true_answer: task.answers[0],
+    const accruePoints = useCallback(async (points) => {
+        const userData = {
+            tg_id: initDataUnsafe.user.id,
+            task_complexity: task?.complexity,
+            task: task?.expression_latex,
+            points: points,
+            true_answer: sum(task?.answers),
             user_answer: parseInt(answer),
         };
-        await request(`users/${tgId}/history`, 'POST', data);
-    };
+        setPoints(await request(`users/${userData.tg_id}/history`, "POST", userData));
+    }, [task, answer, initDataUnsafe.user?.id, user]);
 
-    const handleComplete = () => {
-        let count = 0
-        switch (task.complexity) {
-            case "EASY":
-                count = 50;
-                break;
-            case "MEDIUM":
-                count = 100;
-                break;
-            case "HARD":
-                count = 200;
-                break;
-        }
-        accruePoints(count)
-    };
+    const handleComplete = useCallback(() => {
+        const points = calculatePoints(task?.complexity).fixed;
+        if (points) accruePoints(points);
+    }, [task?.complexity, calculatePoints, accruePoints]);
 
-    const successAnswer = () => {
-        TG.HapticFeedback.impactOccurred(HAPTIC_FEEDBACK_TYPE);
+    const handleSuccessAnswer = useCallback(() => {
+        HapticFeedback.impactOccurred(HAPTIC_FEEDBACK_TYPE);
+        const pointsConfig = calculatePoints(task.complexity);
+        if (pointsConfig) accruePoints(pointsConfig.random);
         progressBarRef.current.fillProgressBar();
-        let count = 0;
-        switch (task.complexity) {
-            case "EASY":
-                count = getRandomNumber(1, 5);
-                break;
-            case "MEDIUM":
-                count = getRandomNumber(5, 15);
-                break;
-            case "HARD":
-                count = getRandomNumber(15, 30);
-                break;
-        }
-        accruePoints(count)
+
+
         setTimeout(() => {
+            fetchTask();
             setAnswer("");
             inputRef.current.focus();
             setResult(null);
-            fetchTask();
         }, 1000);
-        fetchUser()
-    };
 
-    const checkAnswer = () => {
-        if (!answer || !task) {
-            setResult(null);
-            return;
-        }
+    }, [HapticFeedback, task?.complexity, calculatePoints, accruePoints, fetchTask, user]);
 
-        const isCorrect = parseInt(answer) === task.answers[0];
+    const checkAnswer = useCallback(() => {
+        if (!answer || !task?.answers) return;
+
+        const isCorrect = parseInt(answer) === sum(task?.answers);
         setResult(isCorrect);
-        if (isCorrect) {
-            successAnswer();
-        }
+        if (isCorrect) handleSuccessAnswer();
+    }, [answer, task, handleSuccessAnswer]);
+
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") checkAnswer();
     };
 
-    if (userLoading || taskLoading) {
-        return <div>Loading...</div>;
-    }
-
-    if (userError || taskError) {
-        return <div>Error: {userError?.message || taskError?.message}</div>;
-    }
-
+    if (userLoading || taskLoading) return <div>Loading...</div>;
+    if (userError || taskError) return <div>Error: {userError?.message || taskError?.message}</div>;
 
     return (
         <div className="PlayPage">
-            <BalancePanel balance={user?.points}/>
+            <BalancePanel balance={points}/>
             <ProgressBar ref={progressBarRef} onComplete={handleComplete}/>
+
             <div className="task-block">
                 <TaskBlock
                     task={task}
