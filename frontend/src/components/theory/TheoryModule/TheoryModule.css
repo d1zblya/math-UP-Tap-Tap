@@ -1,7 +1,8 @@
 .TheoryModule {
-    background: #D9D9D9;
+    background: #FFFFFF1A;
+    border: 1px solid #B0B0B0;
     border-radius: 15px;
-    padding: 20px;
+    color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -9,9 +10,8 @@
     text-align: center;
     width: 100%;
     height: 150px;
-    color: black;
 }
 
-.theory-title {
+.theory-module-title {
     font-family: "Benzin-Bold", sans-serif;
 }

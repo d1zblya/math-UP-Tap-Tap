@@ -1,9 +1,9 @@
 import "./TheoryModule.css";
 
-const TheoryModule = ({title, text}) => {
+const TheoryModule = ({title, text, setCurrentTheory}) => {
     return (
-        <div className="TheoryModule">
-            <span className={"theory-title"}>{title}</span>
+        <div className="TheoryModule" onClick={() => setCurrentTheory(title)}>
+            <span className={"theory-module-title"}>{title}</span>
         </div>
     )
 }
