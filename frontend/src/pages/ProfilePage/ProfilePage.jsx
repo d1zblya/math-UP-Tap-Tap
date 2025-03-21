@@ -24,7 +24,7 @@ function ProfilePage() {
     }
     return (
         <div className="ProfilePage">
-            <BalancePanel balance={user.balance}/>
+            <BalancePanel balance={user.points}/>
             <NavigationBar tabs={TABS} activeTab={activeTab} setActiveTab={setActiveTab}/>
             {activeTab === "Статистика" && <Statistics/>}
             {activeTab === "Лидеры" && <Leaders/>}
